@@ -19,7 +19,7 @@ try {
 	Class.forName("com.mysql.jdbc.Driver");
 
 	//Create a connection to your DB
-	Connection con = DriverManager.getConnection(url, "alexarminjacek", "jacekalexarmin");
+	Connection con = DriverManager.getConnection(url, "alexarminjacek", "alexarminjacek");
 
 	//Create a SQL statement
 	Statement stmt = con.createStatement();
@@ -40,16 +40,17 @@ try {
   	String password = request.getParameter("password");
 
 	//Make an insert statement for the Sells table:
+	String query = "FROM `accounts` WHERE loginName = ('?') AND password = ('?')";
 	String insert = "INSERT INTO `accounts`(loginName, password)"
 			+ "VALUES ('?', '?')";
 	//Create a Prepared SQL statement allowing you to introduce the parameters of the query
-	PreparedStatement ps = con.prepareStatement(insert);
+	PreparedStatement ps = con.prepareStatement(query);
 
 	//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
 	ps.setString(1, loginName);
 	ps.setString(2, password);
 	//Run the query against the DB
-	ps.executeUpdate();
+	ps.executeQuery();
 
 	//Check counts once again (the same as the above)
 	str = "SELECT COUNT(*) as cnt FROM `accounts`";
@@ -66,14 +67,9 @@ try {
 	int updateAcc = (countAcc != countAccN) ? 1 : 0;
 	;
 	System.out.println(updateAcc);
-	if (updateAcc > 0) {
-		//Create a dynamic HTML form for beer update if needed. The form is not going to show up if the beer specified at HelloWorld.jsp already exists in the database.
-		out.print("New Account Name " + loginName + "<br> Password: " + password);
-	} else {
-		out.print("Account already exists.");
-	}
+	out.print("Account Name " + loginName + "<br> Password: " + password);
 
-	out.print("insert succeeded");
+	out.print("Query succeeded");
 } catch (Exception ex) {
 	out.print("insert failed" + "<br>");
 	out.println("this is why");

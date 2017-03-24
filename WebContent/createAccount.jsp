@@ -15,7 +15,7 @@ try {
 	Class.forName("com.mysql.jdbc.Driver");
 
 	//Create a connection to your DB
-	Connection con = DriverManager.getConnection(url, "alexarminjacek", "jacekalexarmin");
+	Connection con = DriverManager.getConnection(url, "alexarminjacek", "alexarminjacek");
 
 	//Create a SQL statement
 	Statement stmt = con.createStatement();
