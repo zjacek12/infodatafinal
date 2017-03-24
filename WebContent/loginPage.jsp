@@ -14,7 +14,7 @@ try {
 
 	//Create a connection string
 	//jdbc:mysql://cs336-2.crujdr9emkb3.us-east-1.rds.amazonaws.com:3306/BarBeerDrinkerSample
-	String url = "jdbc:mysql://infodataproject.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/infodataproject";
+	String url = "jdbc:mysql://infodataprojectdb.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/finalproject";
 	//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
 	Class.forName("com.mysql.jdbc.Driver");
 
@@ -40,17 +40,16 @@ try {
   	String password = request.getParameter("password");
 
 	//Make an insert statement for the Sells table:
-	String query = "FROM `accounts` WHERE loginName = ('?') AND password = ('?')";
-	String insert = "INSERT INTO `accounts`(loginName, password)"
-			+ "VALUES ('?', '?')";
+	String query = "SELECT * FROM `accounts` WHERE loginName = "+ loginName +" AND password = " + password;
+	
 	//Create a Prepared SQL statement allowing you to introduce the parameters of the query
-	PreparedStatement ps = con.prepareStatement(query);
+	Statement ps = con.createStatement();
 
 	//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-	ps.setString(1, loginName);
-	ps.setString(2, password);
 	//Run the query against the DB
-	ps.executeQuery();
+	ResultSet result1 = stmt.executeQuery(str);
+
+	//Start parsing out the result of the query. Don't forget this statement. It opens up the result set.
 
 	//Check counts once again (the same as the above)
 	str = "SELECT COUNT(*) as cnt FROM `accounts`";
@@ -67,9 +66,9 @@ try {
 	int updateAcc = (countAcc != countAccN) ? 1 : 0;
 	;
 	System.out.println(updateAcc);
-	out.print("Account Name " + loginName + "<br> Password: " + password);
+	out.print("Account Name: " + loginName + "<br> Password: " + password);
 
-	out.print("Query succeeded");
+	out.print("<br>Query succeeded");
 } catch (Exception ex) {
 	out.print("insert failed" + "<br>");
 	out.println("this is why");

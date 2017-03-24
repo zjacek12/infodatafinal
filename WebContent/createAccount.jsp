@@ -10,7 +10,7 @@ try {
 
 	//Create a connection string
 	//jdbc:mysql://cs336-2.crujdr9emkb3.us-east-1.rds.amazonaws.com:3306/BarBeerDrinkerSample
-	String url = "jdbc:mysql://infodataproject.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/infodataproject";
+	String url = "jdbc:mysql://infodataprojectdb.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/finalproject";
 	//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
 	Class.forName("com.mysql.jdbc.Driver");
 
@@ -37,13 +37,11 @@ try {
 
 	//Make an insert statement for the Sells table:
 	String insert = "INSERT INTO `accounts`(loginName, password)"
-			+ "VALUES ('?', '?')";
+			+ "VALUES ('"+loginName+"', '"+password+"')";
 	//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 	PreparedStatement ps = con.prepareStatement(insert);
 
 	//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-	ps.setString(1, loginName);
-	ps.setString(2, password);
 	//Run the query against the DB
 	ps.executeUpdate();
 
@@ -64,16 +62,16 @@ try {
 	System.out.println(updateAcc);
 	if (updateAcc > 0) {
 		//Create a dynamic HTML form for beer update if needed. The form is not going to show up if the beer specified at HelloWorld.jsp already exists in the database.
-		out.print("New Account Name " + loginName + "<br> Password: " + password);
+		out.print("New Account Name: " + loginName + "<br> Password: " + password);
 	} else {
-		out.print("Account already exists.");
+		out.print("<br>Account already exists.");
 	}
 
-	out.print("insert succeeded");
+	out.print("<br>insert succeeded");
 } catch (Exception ex) {
 	out.print("insert failed" + "<br>");
 	out.println("this is why");
-	ex.printStackTrace();
+	out.print(ex.getMessage());
 }
 %>
 
