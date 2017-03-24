@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+<!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,49 +10,34 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
 <%
 try {
 
-	//Create a connection string
-	//jdbc:mysql://cs336-2.crujdr9emkb3.us-east-1.rds.amazonaws.com:3306/BarBeerDrinkerSample
 	String url = "jdbc:mysql://infodataprojectdb.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/finalproject";
-	//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
 	Class.forName("com.mysql.jdbc.Driver");
 
-	//Create a connection to your DB
 	Connection con = DriverManager.getConnection(url, "alexarminjacek", "alexarminjacek");
 
-	//Create a SQL statement
 	Statement stmt = con.createStatement();
 
-	//Populate SQL statement with an actual query. It returns a single number. The number of beers in the DB.
 	String str = "SELECT COUNT(*) as cnt FROM `accounts`";
 
-	//Run the query against the DB
 	ResultSet result = stmt.executeQuery(str);
 
-	//Start parsing out the result of the query. Don't forget this statement. It opens up the result set.
 	result.next();
-	//Parse out the result of the query
 	int countAcc = result.getInt("cnt");
 
-	//Get parameters from the HTML form at the HelloWorld.jsp
 	String loginName = request.getParameter("loginName");
   	String password = request.getParameter("password");
 
-	//Make an insert statement for the Sells table:
 	String query = "SELECT * FROM `accounts` WHERE loginName = "+ loginName +" AND password = " + password;
 	
-	//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 	Statement ps = con.createStatement();
 
-	//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-	//Run the query against the DB
 	ResultSet result1 = stmt.executeQuery(str);
 
-	//Start parsing out the result of the query. Don't forget this statement. It opens up the result set.
 
-	//Check counts once again (the same as the above)
 	str = "SELECT COUNT(*) as cnt FROM `accounts`";
 	result = stmt.executeQuery(str);
 	result.next();
@@ -59,10 +45,8 @@ try {
 	int countAccN = result.getInt("cnt");
 	System.out.println(countAccN);
 
-	//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 	con.close();
 
-	//Compare counts of the beers and bars before INSERT on Sells and after to figure out whether there is a bar and a beer stub records inserted by a trigger. 
 	int updateAcc = (countAcc != countAccN) ? 1 : 0;
 	;
 	System.out.println(updateAcc);
