@@ -19,42 +19,26 @@ try {
 
 	Connection con = DriverManager.getConnection(url, "alexarminjacek", "alexarminjacek");
 
-	Statement stmt = con.createStatement();
-
-	String str = "SELECT COUNT(*) as cnt FROM `accounts`";
-
-	ResultSet result = stmt.executeQuery(str);
-
-	result.next();
-	int countAcc = result.getInt("cnt");
-
 	String loginName = request.getParameter("loginName");
   	String password = request.getParameter("password");
 
-	String query = "SELECT * FROM `accounts` WHERE loginName = "+ loginName +" AND password = " + password;
+	String query = "SELECT loginName, password FROM accounts WHERE loginName ='"+loginName+"' AND password ='"+password+"'";
 	
-	Statement ps = con.createStatement();
+	PreparedStatement ps = con.prepareStatement(query);
+	ResultSet result = ps.executeQuery(query);
+	if(result.next()){
+		con.close();
+		out.print("Account Name: " + loginName + "<br> Password: " + password);
 
-	ResultSet result1 = stmt.executeQuery(str);
+		out.print("<br>Logged In!");
+	} else {
+		con.close();
+		out.print("Please go back and create an account!");
+	}
 
-
-	str = "SELECT COUNT(*) as cnt FROM `accounts`";
-	result = stmt.executeQuery(str);
-	result.next();
-	System.out.println("Here");
-	int countAccN = result.getInt("cnt");
-	System.out.println(countAccN);
-
-	con.close();
-
-	int updateAcc = (countAcc != countAccN) ? 1 : 0;
-	;
-	System.out.println(updateAcc);
-	out.print("Account Name: " + loginName + "<br> Password: " + password);
-
-	out.print("<br>Query succeeded");
+	
 } catch (Exception ex) {
-	out.print("insert failed" + "<br>");
+	out.print("something failed failed" + "<br>");
 	out.println("this is why");
 	ex.printStackTrace();
 }

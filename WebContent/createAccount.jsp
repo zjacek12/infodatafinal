@@ -23,7 +23,7 @@ try {
 	Statement stmt = con.createStatement();
 
 	
-	String str = "SELECT COUNT(*) as cnt FROM `accounts`";
+	String str = "SELECT COUNT(*) as cnt FROM accounts";
 
 	
 	ResultSet result = stmt.executeQuery(str);
@@ -32,13 +32,12 @@ try {
 	result.next();
 	
 	int countAcc = result.getInt("cnt");
-
 	
 	String loginName = request.getParameter("loginName");
   	String password = request.getParameter("password");
 
 	
-	String insert = "INSERT INTO `accounts`(loginName, password)"
+	String insert = "INSERT INTO accounts(loginName, password) "
 			+ "VALUES ('"+loginName+"', '"+password+"')";
 	
 	PreparedStatement ps = con.prepareStatement(insert);
@@ -47,12 +46,11 @@ try {
 	ps.executeUpdate();
 
 	
-	str = "SELECT COUNT(*) as cnt FROM `accounts`";
+	str = "SELECT COUNT(*) as cnt FROM accounts";
 	result = stmt.executeQuery(str);
 	result.next();
 	System.out.println("Here");
 	int countAccN = result.getInt("cnt");
-	System.out.println(countAccN);
 
 	
 	con.close();
@@ -70,7 +68,7 @@ try {
 
 	out.print("<br>insert succeeded");
 } catch (Exception ex) {
-	out.print("insert failed" + "<br>");
+	out.print("Account already exists!" + "<br>");
 	out.println("this is why");
 	out.print(ex.getMessage());
 }
