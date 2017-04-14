@@ -82,6 +82,7 @@ try {
 		if (updateAcc > 0) {
 			
 			out.print("New Account Name: " + loginName + "<br> Password: " + password1);
+			out.print("<br>Go back and log in using your new account");
 		} else {
 			out.print("<br>Account already exists.");
 		}

@@ -1,0 +1,35 @@
+BIG TODO -> AUTHENTICATION
+
+index.html > done
+createAccount.jsp> POST route > done
+loginPage.jsp > GET route> done
+navigation.html > ? > todo >  // RIDER OR DRIVER OR PROFILE BUTTONS
+rider.jsp > GET route > todo                          // JACEK
+	myRequests.jsp > GET > todo
+		deleteRequest.jsp > POST > todo
+		editRequest.jsp > POST > todo
+	createRequest.html > ? > todo
+		saveRequest.jsp > POST route > todo
+			getRideMatches.jsp > GET route > todo
+				rideDetails.jsp > GET > todo
+				requestSpot.jsp > POST route > todo
+				
+driver.jsp > GET route > todo						// ARMIN
+	viewRequests.jsp > GET route > todo
+		offerRide.jsp > POST route > todo
+	myRides.jsp > GET route > todo
+		finalizeRide.js > POST route > todo
+	createRide > POST route > todo
+		getRequestMatches.jsp > GET > todo
+			offerRide.jsp> POST > todo
+		
+prfile.jsp > GET route > todo						// ALEX
+	>LINK TO> myRequests
+	>LINK TO> myRides
+	>DISPLAY> ranks and info and leaderboard
+	editProfile.html > ? > todo
+		saveEdits.jsp > POST route > todo
+	messages.jsp > GET > todo
+		
+
+
