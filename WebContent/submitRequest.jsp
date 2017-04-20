@@ -50,7 +50,7 @@ try {
 	if (validated) {
 		/* String insert = "INSERT INTO accounts(loginName, password) "
 				+ "VALUES ('"+loginName+"', '"+password+"')"; */
-		 String insert = "INSERT INTO requestedRides" +
+		 String insert = "INSERT INTO finalproject.requestedRides " +
 				"(RUID, "+
 				"fromLocation, "+
 				"toLocation, "+
