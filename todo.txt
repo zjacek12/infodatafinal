@@ -3,13 +3,16 @@ BIG TODO -> AUTHENTICATION
 index.html > done
 createAccount.jsp> POST route > done
 loginPage.jsp > GET route> done
+forgot.jsp > GET > in progress << NEED EMAIL CLIENT
+	forgot w/ email > GET > in progress
+	forgot w/ username > GET > in progress
 navigation.html > ? > todo >  // RIDER OR DRIVER OR PROFILE BUTTONS
-rider.jsp > GET route > todo                          // JACEK
+rider.jsp > GET route > done                          // JACEK
 	myRequests.jsp > GET > todo
 		deleteRequest.jsp > POST > todo
 		editRequest.jsp > POST > todo
-	createRequest.html > ? > todo
-		saveRequest.jsp > POST route > todo
+	createRequest.html > ? > done kinda
+		saveRequest.jsp > POST route > done kinda
 			getRideMatches.jsp > GET route > todo
 				rideDetails.jsp > GET > todo
 				requestSpot.jsp > POST route > todo

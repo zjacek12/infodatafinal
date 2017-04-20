@@ -3,7 +3,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <body>
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
@@ -22,6 +22,7 @@ try {
 	result.next();	
 	int countAcc = result.getInt("cnt");
 	boolean validated = true;
+	
 	String loginName = request.getParameter("loginName");
   	String password1 = request.getParameter("password1");
   	String password2 = request.getParameter("password2");
@@ -77,7 +78,7 @@ try {
 	
 		 
 		int updateAcc = (countAcc != countAccN) ? 1 : 0;
-		;
+		
 		System.out.println(updateAcc);
 		if (updateAcc > 0) {
 			
@@ -86,8 +87,6 @@ try {
 		} else {
 			out.print("<br>Account already exists.");
 		}
-	
-		out.print("<br>insert succeeded");
 	} else {
 		out.print("<br> Go back and check your credentials");
 	}

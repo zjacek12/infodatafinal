@@ -7,24 +7,7 @@
 </head>
 <body>
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
-<!-- <table>
-	<tr>
-		<td>
-			<h1>Create Account</h1>
-			<form action="createAccount.jsp" method="post">
-			* fields are required!<br>
-			*First Name: <input type="text" name="firstName"><br>
-			*Last Name: <input type="text" name="lastName"><br>
-			*Login Name: <input type="text" name="loginName"><br>
-			*Password: <input type="text" name="password1"><br>
-			*Re-Type Password: <input type="text" name="password2"><br>
-			*RUID: <input type="text" name="ruid"><br>
-			*Email Address: <input type="text" name="email"><br>
-			Phone Number <input type="text" name="phoneNumber"><br>
-			Address: <input type="text" name="address"><br>
-			<button type="submit">Create Account</button>
-			</form>
-			<form action="/examples/jsp/forms/process.jsp" method=post> -->
+
 <form action="loginPage.jsp" method="get">
 	<center>
 		<table cellpadding=4 cellspacing=2 border=0>
@@ -44,15 +27,23 @@
 				<td valign=top>
 					<b>Password<sup>*</sup></b> 
 					<br>
-					<input type="password" name="password" size=30 value=""  
-				maxlength=10><br></td>
+					<input type="password" name="password" size=30 value=""  maxlength=10><br>
+				</td>
 			</tr>
 			<tr bgcolor="#c8d8f8">
 				<td  align=center colspan=2>
-					<input type="submit" value="Submit"> <input type="reset"  
-					value="Reset">
+					<input type="submit" value="Submit"> <input type="reset"  value="Reset">
 				</td>
 			</tr>
+		</table>
+	</center>
+</form>
+<form action="forgot.html" method="get">
+	<center>
+		<table cellpadding=4 cellspacing=2 border=0>
+			<th bgcolor="#CCCCFF" colspan=2>
+				<input type="submit" value="Forgot Credenctials">
+			</th>
 		</table>
 	</center>
 </form>
@@ -78,7 +69,7 @@
 				<td valign=top>
 					<b>E-Mail<sup>*</sup></b> 
 					<br>
-					<input type="text" name="email" value="" size=25  maxlength=125>
+					<input type="email" name="email" value="" size=25  maxlength=125>
 				<br></td>
 			</tr>
 			<tr bgcolor="#c8d8f8">

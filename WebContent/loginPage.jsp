@@ -20,17 +20,36 @@ try {
 	Connection con = DriverManager.getConnection(url, "alexarminjacek", "alexarminjacek");
 
 	String loginName = request.getParameter("loginName");
+	session.setAttribute("loginName", loginName);
   	String password = request.getParameter("password");
+  	session.setAttribute("password", password);
 
-	String query = "SELECT loginName, password FROM accounts WHERE loginName ='"+loginName+"' AND password ='"+password+"'";
+	String query = "SELECT loginName, password, RUID FROM accounts WHERE loginName ='"+loginName+"' AND password ='"+password+"'";
 	
 	PreparedStatement ps = con.prepareStatement(query);
 	ResultSet result = ps.executeQuery(query);
 	if(result.next()){
+		session.setAttribute("ruid", result.getInt("RUID"));
 		con.close();
-		out.print("Account Name: " + loginName + "<br> Password: " + password);
-
+		// out.print("Account Name: " + loginName + "<br> Password: " + password);
 		out.print("<br>Logged In!");
+		%>
+		<form action="rider.jsp" method="get">
+			<center>
+				<input  type="submit" value="Rider">
+			</center>
+		</form>
+		<form action="driver.jsp" method="get">
+			<center>
+				<input type="submit" value="Driver">
+			</center>
+		</form>
+		<form action="profile.jsp" method="get">
+			<center>
+				<input type="submit" value="Profile">
+			</center>
+		</form>
+		<% 
 	} else {
 		con.close();
 		out.print("Please go back and create an account!");
