@@ -32,6 +32,7 @@ try {
   	String arrivalTime = request.getParameter("arrivalTime");
   	
   	
+  	
   	/* SimpleDateFormat parseDate = new SimpleDateFormat("MM/dd/yyyy");
   	SimpleDateFormat formatDate = new SimpleDateFormat("EEE, d MMM HH:mm:ss");
   	try {
@@ -85,8 +86,6 @@ try {
 			out.print("early departure type and val"+earlyDeparture);
 		}
 		
-		String redirectURL = "http://ec2-35-163-179-160.us-west-2.compute.amazonaws.com:8080/cs336Final/rider.jsp?";
-	    /* response.sendRedirect(redirectURL); */
 		response.sendRedirect("profilePage.jsp");
 	} else {
 		out.print("<br> Go back and check your input");
@@ -95,7 +94,7 @@ try {
 	out.print("Something went wrong.");
 	/* out.print("Account already exists!" + "<br>");
 	out.print("maybe something went wrong"); */
-	out.print("<br>" +"this may be why : ");
+	out.print("<br>" +"this may be why : " +ex.getMessage());
 	ex.printStackTrace();
 }
 %>

@@ -19,7 +19,7 @@ rider.jsp > GET route > done                          // JACEK
 				
 driver.jsp > GET route > todo						// ARMIN
 	viewRequests.jsp > GET route > todo
-		offerRide.jsp > POST route > todo
+
 	myRides.jsp > GET route > todo
 		finalizeRide.js > POST route > todo
 	createRide > POST route > todo

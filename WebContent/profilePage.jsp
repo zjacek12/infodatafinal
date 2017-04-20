@@ -14,10 +14,37 @@
 
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 
+<%
+try {
+	/* Instance RUID */
+	int myruid = Integer.parseInt(session.getAttribute("ruid").toString());
+	/* Setup SQL connection */
+	String url="jdbc:mysql://infodataprojectdb.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/finalproject";
+	String username="alexarminjacek";
+	String password="alexarminjacek";
+	Connection conn=DriverManager.getConnection(url, username, password);
+	Statement stmt=conn.createStatement();
+	
+	/* Queries and variables */
+	String query;
+	query="SELECT * FROM finalproject.car WHERE ruid=" + myruid;
+	ResultSet vi = stmt.executeQuery(query);
+	query="SELECT * FROM finalproject.accounts ORDER BY rankScore";
+	ResultSet lb = stmt.executeQuery(query);
+	query="SELECT loginName FROM finalproject.accounts WHERE ruid=" + myruid;
+	ResultSet lN = stmt.executeQuery(query);
+	
+	/* Close stmt and conn */
+	stmt.close();
+	conn.close();
+
+%>
 <!-- Top Title -->
 <header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
-  <div class="w3-left w3-padding">Profile : (Username Here)</div>
+  <div class="w3-left w3-padding">Profile : <%out.print(lN.getString("loginName"));%></div>
 </header>
+
+<%lN.close();%>
 
 <!-- Logout -->
 <div style="float:right">
@@ -26,7 +53,7 @@
 </div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:50px; margin-right:50px">
+<div class="w3-main" style="margin-left:50px">
 
   <!-- Keep room for the navigation menu  -->
   <div class="" style="margin-top:83px"></div> 
@@ -35,7 +62,7 @@
   <header>
   <div class="w3-padding-32" style="center">
     <div class="w3-bar">
-      <a href="hello.jsp" class="w3-bar-item w3-black w3-button">Profile</a>
+      <a href="profilePage.jsp" class="w3-bar-item w3-black w3-button">Profile</a>
       <a href="offeredRides.jsp" class="w3-bar-item w3-button w3-hover-black">Offered Rides</a>
       <a href="requestedRides.jsp" class="w3-bar-item w3-button w3-hover-black">Requested Rides</a>
       <a href="messages.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
@@ -89,54 +116,33 @@
   </div>
   
   <!-- Vehicle Information -->
-  <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="vehinfo">
+  <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="contact">
     <div class="w3-content" style="max-width:600px">
+      <h4 class="w3-center"><b>Vehicle Information</b></h4>
       <table style="width:100%" border="2">
-      	<th>
-      		<h4 class="w3-center"><b>Vehicle Information</b></h4>
-      	</th>
 	    <tr>
 		  <th>License Plate</th>
 		  <th>Make</th>
 		  <th>Color</th>
 		  <th>Max Seating</th>
 		</tr>
-		<%
-		try {
-			Class.forName("com.mysql.jdbc.car");
-			String url="jdbc:mysql://infodataprojectdb.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/finalproject";
-			String username="alexarminjacek";
-			String password="alexarminjacek";
-			String query="SELECT * FROM car WHERE RUID=myRUID";
-			Connection conn=DriverManager.getConnection(url, username, password);
-			Statement stmt=conn.createStatement();
-			ResultSet rs=stmt.executeQuery(query);
-			while(rs.next()) {
-		%>
+<%
+	while(vi.next()) {
+%>
 		<tr>
-		  <td><%out.println(rs.getInt("plate"));%></td>
-		  <td><%out.println(rs.getString("make"));%></td>
-		  <td><%out.println(rs.getString("color"));%></td>
-		  <td><%out.println(rs.getInt("numSeats"));%></td>
+			<td><%out.print(vi.getString("plate"));%></td>
+			<td><%out.print(vi.getString("make"));%></td>
+			<td><%out.print(vi.getString("color"));%></td>
+			<td><%out.print(vi.getString("numSeats"));%></td>
 		</tr>
-		<%
-			}
-		%>
-		</table>
-		<%
-			rs.close();
-			stmt.close();
-			conn.close();
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		%>
+<%
+	}
+	vi.close();
+%>		
+	</table>
     </div>
   </div>
-  
-  
+
   <!-- Contact section -->
   <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="contact">
     <div class="w3-content" style="max-width:600px">
@@ -155,55 +161,44 @@
       </div>
     </div>
   </div>
-  
-   <!-- Leaderboard/Footer -->
-	<div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="leaders">
-		<h4 class="w3-center"><b>Leaderboard</b></h4>
-	    <div class="w3-content w3-center">
-	      <table style="width:100%" border="2">
-		    <tr>
-			  <th>Rank</th>
-			  <th>Username</th>
-			  <th>Rating Score</th>
-			</tr>
-			<%
-			try {
-				Class.forName("com.mysql.jdbc.accounts");
-				String url="jdbc:mysql://infodataprojectdb.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/finalproject";
-				String username="alexarminjacek";
-				String password="alexarminjacek";
-				String query="SELECT * FROM accounts ORDER BY rankScore";
-				Connection conn=DriverManager.getConnection(url, username, password);
-				Statement stmt=conn.createStatement();
-				ResultSet rs=stmt.executeQuery(query);
-				int i=1;
-				while(i<11 && rs.next()) {
-			%>
-			<tr>
-			  <td><%out.println(i);%></td>
-			  <td><%out.println(rs.getString("loginName"));%></td>
-			  <td><%out.println(rs.getString("rankScore"));%></td>
-			</tr>
-			<%
-				}
-			%>
-			</table>
-			<%
-				rs.close();
-				stmt.close();
-				conn.close();
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-			%>
-	    </div>
 
-	</div>
-  
+  <!-- Leaderboard -->
+  <div class="w3-container w3-grey w3-padding-32 w3-padding-large" id="leaderboard">
+    <div class="w3-content" style="max-width:600px">
+	<h4 class="w3-center"><b>Leaderboard</b></h4>
+    <div class="w3-content w3-center">
+      <table style="width:100%" border="2">
+	    <tr>
+			<th>Rank</th>
+			<th>Username</th>
+			<th>Rating Score</th>
+		</tr>
+<%
+	int i = 1;
+	while(i < 11 && lb.next()) {
+%>
+		<tr>
+			<td><%out.print(i);%></td>
+			<td><%out.print(lb.getString("loginName"));%></td>
+			<td><%out.print(lb.getString("rankScore"));%></td>
+		</tr>	
+<%
+	}
+	lb.close();
+%>
+	</table>
+    </div>
+    </div>
+  </div>
   
   <div class="w3-black w3-center w3-padding-24">Made by Alex Marek, Jacek Zarski & Armin Grossrieder</div>
+  <%
+  }
+	catch(Exception e)
+	{
+		out.print(e.getMessage());
+	}
+%>
 
 <!-- End page content -->
 </div>

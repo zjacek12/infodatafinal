@@ -56,7 +56,7 @@ try {
 	  <header>
 	  <div class="w3-padding-32" style="center">
 	    <div class="w3-bar">
-	      <a href="hello.jsp" class="w3-bar-item w3-black w3-button">Profile</a>
+	      <a href="hello.jsp" class="w3-bar-item w3-hover-black w3-button">Profile</a>
 	      <a href="offeredRides.jsp" class="w3-bar-item w3-button w3-hover-black">Offered Rides</a>
 	      <a href="requestedRides.jsp" class="w3-bar-item w3-button w3-hover-black">Requested Rides</a>
 	      <a href="messages.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
