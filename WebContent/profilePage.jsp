@@ -25,19 +25,25 @@ try {
 	Connection conn=DriverManager.getConnection(url, username, password);
 	Statement stmt=conn.createStatement();
 	
+
+	
 	/* Queries and variables */
 	String query;
 	query="SELECT * FROM finalproject.car WHERE ruid=" + myruid;
 	ResultSet vi = stmt.executeQuery(query);
+	vi.next();
+	/* stmt.close(); */
 	query="SELECT * FROM finalproject.accounts ORDER BY rankScore";
-	ResultSet lb = stmt.executeQuery(query);
+	Statement stmt1=conn.createStatement();
+	ResultSet lb = stmt1.executeQuery(query);
+	lb.next();
+	/* stmt1.close(); */
 	query="SELECT loginName FROM finalproject.accounts WHERE ruid=" + myruid;
-	ResultSet lN = stmt.executeQuery(query);
+	Statement stmt2=conn.createStatement();
+	ResultSet lN = stmt2.executeQuery(query);
+	lN.next();
+	/* stmt1.close(); */
 	
-	/* Close stmt and conn */
-	stmt.close();
-	conn.close();
-
 %>
 <!-- Top Title -->
 <header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
@@ -183,6 +189,7 @@ try {
 			<td><%out.print(lb.getString("rankScore"));%></td>
 		</tr>	
 <%
+	i++;
 	}
 	lb.close();
 %>
@@ -193,6 +200,12 @@ try {
   
   <div class="w3-black w3-center w3-padding-24">Made by Alex Marek, Jacek Zarski & Armin Grossrieder</div>
   <%
+	/* Close stmt and conn */
+	stmt.close();
+ 	stmt1.close();
+ 	stmt2.close();
+	conn.close();
+
   }
 	catch(Exception e)
 	{
