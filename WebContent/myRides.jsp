@@ -25,9 +25,13 @@ try {
           <font size=5>My Rides</font>
         </th> <%
         while(result.next()){
-          %> <tr valign=top colspan=2>
-            <b>Date: <%out.print(result.getString("departureTime")); %></b>
-            <b>To: <%out.print(result.getString("toLocation")); %></b>
+          %> <tr class='clickable-row' data-href='/finalizeRide.jsp' valign=top colspan=2>
+          <td>
+              <b>Date: <%out.print(result.getString("departureTime")); %></b><br>
+              <b>To: <%out.print(result.getString("toLocation")); %></b>
+              // this is what gets passed to finalizeRide.jsp :
+              int rideid = Integer.parseInt(result.getString("offerID"));
+            </td>
           </tr> <%
         }
 				%><tr bgcolor="#c8d8f8">
@@ -39,12 +43,6 @@ try {
 		</center>
 	</form>
 
-
-  String redirectURL = "http://ec2-35-163-179-160.us-west-2.compute.amazonaws.com:8080/cs336Final/rider.jsp?";
-    response.sendRedirect(redirectURL);
-  } else {
-    out.print("<br> Go back and check your input");
-  }
   } catch (Exception ex) {
     out.print("Something went wrong.");
     /* out.print("Account already exists!" + "<br>");
