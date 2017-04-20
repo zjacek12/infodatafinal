@@ -47,15 +47,16 @@ try {
 	}
 	
 	if (validated) {
-		//String insert = "INSERT INTO accounts(loginName, password) "
-		//		+ "VALUES ('"+loginName+"', '"+password+"')";
-		/* String insert = "INSERT INTO requestedRides" +
+		/* String insert = "INSERT INTO accounts(loginName, password) "
+				+ "VALUES ('"+loginName+"', '"+password+"')"; */
+		 String insert = "INSERT INTO requestedRides" +
 				"(RUID, "+
 				"fromLocation, "+
 				"toLocation, "+
 				"departureTime, "+
 				"arrivalTime, "+
 				"earlyDeparture)"+
+				
 				"VALUES"+
 				"('"+ruid+"', "+
 				"'"+fromLocation+"', "+
@@ -65,9 +66,9 @@ try {
 				"'"+earlyDeparture+"')";
 		PreparedStatement ps = con.prepareStatement(insert);
 		ps.executeUpdate();
-		 */
+		
 
-		str = "SELECT COUNT(*) as cnt FROM accounts";
+		str = "SELECT COUNT(*) as cnt FROM requestedRides WHERE RUID='"+ruid+"'";
 		result = stmt.executeQuery(str);
 		result.next();
 		int numRequestsN = result.getInt("cnt");
@@ -85,7 +86,8 @@ try {
 		}
 		
 		String redirectURL = "http://ec2-35-163-179-160.us-west-2.compute.amazonaws.com:8080/cs336Final/rider.jsp?";
-	    response.sendRedirect(redirectURL);
+	    /* response.sendRedirect(redirectURL); */
+		response.sendRedirect("profilePage.jsp");
 	} else {
 		out.print("<br> Go back and check your input");
 	}
