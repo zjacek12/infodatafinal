@@ -9,13 +9,11 @@
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
 <%
 try {
-
 	
 	
 	String url = "jdbc:mysql://infodataprojectdb.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/finalproject";
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection con = DriverManager.getConnection(url, "alexarminjacek", "alexarminjacek");
-
 	Statement stmt = con.createStatement();
 	String str = "SELECT COUNT(*) as cnt FROM accounts";
 	ResultSet result = stmt.executeQuery(str);

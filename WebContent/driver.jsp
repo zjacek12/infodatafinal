@@ -27,7 +27,6 @@ try {
 	query = "SELECT * FROM accounts WHERE loginName ='"+loginName+"' AND password ='"+password+"'";
 	PreparedStatement ps = con.prepareStatement(query);
 	ResultSet result = ps.executeQuery(query);
-
 	if(result.next()){
 		%>
 		<form action="profile.jsp" method="get">
@@ -130,12 +129,10 @@ try {
 		<%
 		con.close();
 		// out.print("Account Name: " + loginName + "<br> Password: " + password);
-
 	} else {
 		con.close();
 		out.print("Please go back and log in again");
 	}
-
 } catch (Exception ex) {
 	out.print("something failed failed" + "<br>");
 	out.println("this is why");
