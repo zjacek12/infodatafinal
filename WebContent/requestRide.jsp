@@ -70,7 +70,7 @@ try {
 					<tr bgcolor="#c8d8f8">
 						<td>
 							<b>From Campus</b><br>
-							<select name="fromLocaction">
+							<select name="fromLocation">
 								<option value="formCA"> College Ave </option>
 								<option value="fromL"> Livingston </option>
 								<option value="fromB"> Busch </option>
