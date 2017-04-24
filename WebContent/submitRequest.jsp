@@ -30,6 +30,7 @@ try {
   	String earlyDeparture = request.getParameter("earlyDeparture");
   	String departureTime = request.getParameter("departureTime");
   	String arrivalTime = request.getParameter("arrivalTime");
+  	String recurring = request.getParameter("recurring");
   	
   	
   	
@@ -50,12 +51,13 @@ try {
 	if (validated) {
 		/* String insert = "INSERT INTO accounts(loginName, password) "
 				+ "VALUES ('"+loginName+"', '"+password+"')"; */
-		 String insert = "INSERT INTO requestedRides" +
+		 String insert = "INSERT INTO finalproject.requestedRides " +
 				"(RUID, "+
 				"fromLocation, "+
 				"toLocation, "+
 				"departureTime, "+
 				"arrivalTime, "+
+				"recurring, "+
 				"earlyDeparture)"+
 				
 				"VALUES"+
@@ -64,6 +66,7 @@ try {
 				"'"+toLocation+"', "+
 				"'"+departureTime+"', "+
 				"'"+arrivalTime+"', "+
+				"'"+recurring+"', "+
 				"'"+earlyDeparture+"')";
 		PreparedStatement ps = con.prepareStatement(insert);
 		ps.executeUpdate();

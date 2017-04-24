@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
-<div style="float:right">
+<div style="float:right;margin-right:50px">
   <p> </p>
   <a href="index.html" onClick="alert('You have successfuly logged out.')">Logout</a>
 </div>
@@ -57,47 +57,76 @@ try {
 	  <div class="w3-padding-32" style="center">
 	    <div class="w3-bar">
 	      <a href="hello.jsp" class="w3-bar-item w3-hover-black w3-button">Profile</a>
-	      <a href="offeredRides.jsp" class="w3-bar-item w3-button w3-hover-black">Offered Rides</a>
+	      <a href="myRides.jsp" class="w3-bar-item w3-button w3-hover-black">Offered Rides</a>
 	      <a href="requestedRides.jsp" class="w3-bar-item w3-button w3-hover-black">Requested Rides</a>
-	      <a href="messages.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
+	      <a href="messenger.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
 	    </div>
 	  </div>
 	  </header>
+	  		<form action="profile.jsp" method="get">
+			<table class="w3-table-all">
+				<th bgcolor="#CCCCFF" colspan=2>
+					<font size=5>RIDER INFO</font>
+				</th>
+				<tr bgcolor="#c8d8f8">
+					<td valign=top colspan=2>
+						<b>Login: <%out.print(loginName);%></b><br>
+						<b>Name: <%out.print(result.getString("firstName")+ " " +result.getString("lastName"));%></b><br>
+						<b>RUID: <%out.print(ruid); %></b>
+					</td>
+				</tr>
+				<tr bgcolor="#c8d8f8">
+					<td valign=top>
+						<b>Driver Rating: <%out.print(result.getDouble("driverRating")); %></b>
+						<br>
+						<b>Number of rides offered: <%out.print(result.getInt("numRides"));%></b>
+					</td>
+				</tr>
+			</table>
+	</form>
 			
 		<form action="submitRequest.jsp" method="post">
-			<center>
-				<table cellpadding=4 cellspacing=2 border=0 class="w3-table-all" style="">
+				<table cellpadding=4 cellspacing=2 border=0 class="w3-table-all">
+					<th bgcolor="#CCCCFF" colspan=2>
+						<font size=5>REQUEST INFO</font>
+					</th>
 					<tr bgcolor="#c8d8f8">
 						<td>
 							<b>From Campus</b><br>
 							<select name="fromLocation">
-								<option value="formCA"> College Ave </option>
-								<option value="fromL"> Livingston </option>
-								<option value="fromB"> Busch </option>
-								<option value="formCD"> Cook/Douglass </option>
+								<option value="College Ave"> College Ave </option>
+								<option value="Livingston"> Livingston </option>
+								<option value="Busch"> Busch </option>
+								<option value="Cook/Douglass"> Cook/Douglass </option>
 							</select>
 						</td>
 						<td>
 							<b>To Campus</b><br>
 							<select name="toLocation">
-								<option value="toC"> College Ave </option>
-								<option value="toL"> Livingston </option>
-								<option value="toB"> Busch </option>
-								<option value="toCD"> Cook/Douglass </option>
+								<option value="College Ave"> College Ave </option>
+								<option value="Livingston"> Livingston </option>
+								<option value="Busch"> Busch </option>
+								<option value="Cook/Douglass"> Cook/Douglass </option>
 							</select>
 						</td>
 					</tr>
+					<!-- <tr bgcolor="#c8d8f8">
+						<td>
+							<b>Parking Lot</b><br>
+							<intput type="text" name="parkinglot" value="" />
+						</td>
+					</tr> -->
 					<tr bgcolor="#c8d8f8">
-<%-- 					<fmt:formatDate var='formattedDate' value='${date}' pattern="EEE, d MMM hh:mm aaa" type='both' timeStyle='medium'/> --%>						<td>
+						<td>
 							<b>How early can you leave?</b><br>
 							
-							<input type="datetime-local" name="earlyDeparture" <%-- value="${formattedDate}" --%>/>
+							<input type="datetime-local" name="earlyDeparture" />
 							<br>
 						</td>
 						<td>
 							<b>How late can you leave?</b><br>
 							
-							<input type="datetime-local" name="departureTime" <%-- value="${formattedDate}" --%>/>
+							<input type="datetime-local" name="departureTime"/>
 							<br>
 						</td>
 					</tr>
@@ -105,18 +134,16 @@ try {
 						<td>
 						 	<b>When do you want to arrive by:</b>
 							
-							<input type="datetime-local" name="arrivalTime" <%-- value="${formattedDate}" --%>/>
+							<input type="datetime-local" name="arrivalTime"/>
 							<br>
 						</td>
 					</tr>
 					<tr bgcolor="#c8d8f8">
 						<td>
 							<label for="yesrecurring">Every Week</label>
-							<input type="radio" name="recurring" id="yesrecurring" value="true">
-						</td>
-						<td>
+							<input type="radio" name="recurring" id="yesrecurring" value="1">
 							<label for="norecurring">Only Once</label>
-							<input type="radio" name="recurring" id="norecurring" value="false" checked="checked">
+							<input type="radio" name="recurring" id="norecurring" value="0" checked="checked">
 						</td>
 					</tr>
 					<tr bgcolor="#c8d8f8">
@@ -125,7 +152,6 @@ try {
 						</td>
 					</tr>
 				</table>
-			</center>
 		</form>
 		<%
 		con.close();
@@ -143,5 +169,6 @@ try {
 	ex.printStackTrace();
 }
 %>
+</div>
 </body>
 </html>

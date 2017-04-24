@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
-<div style="float:right">
+<div style="float:right;margin-right:50px">
   <p> </p>
   <a href="index.html" onClick="alert('You have successfuly logged out.')">Logout</a>
 </div>
@@ -56,10 +56,10 @@ try {
 	  <header>
 	  <div class="w3-padding-32" style="center">
 	    <div class="w3-bar">
-	      <a href="hello.jsp" class="w3-bar-item w3-hover-black w3-button">Profile</a>
-	      <a href="offeredRides.jsp" class="w3-bar-item w3-button w3-hover-black">Offered Rides</a>
+	      <a href="profilePage.jsp" class="w3-bar-item w3-hover-black w3-button">Profile</a>
+	      <a href="myRides.jsp" class="w3-bar-item w3-button w3-hover-black">Offered Rides</a>
 	      <a href="requestedRides.jsp" class="w3-bar-item w3-button w3-hover-black">Requested Rides</a>
-	      <a href="messages.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
+	      <a href="messenger.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
 	    </div>
 	  </div>
 	  </header>
@@ -88,23 +88,22 @@ try {
 						</td>
 					</tr>
 					<tr bgcolor="#c8d8f8">
-<%-- 					<fmt:formatDate var='formattedDate' value='${date}' pattern="EEE, d MMM hh:mm aaa" type='both' timeStyle='medium'/> --%><td>
-							<b>Time you plan on leaving:</b><br>
-							
-							<input type="datetime-local" name="departureTime" <%-- value="${formattedDate}" --%>/>
+						<td>
+							<b>Time you plan on leaving?</b><br>
+							<input type="datetime-local" name="departureTime"/>
 							<br>
 						</td>
 					<td>
-						 	<b>When do you want to arrive by:</b>
+						 	<b>When do you want to arrive by?</b><br>
 							
-							<input type="datetime-local" name="arrivalTime" <%-- value="${formattedDate}" --%>/>
+							<input type="datetime-local" name="arrivalTime"/>
 							<br>
 						</td>
 					</tr>
 					<tr bgcolor="#c8d8f8">
 						<td>
 							<b>Which Car</b><br>
-							<select name="car">
+							<select name="car" >
 							<% query = "SELECT * FROM finalproject.car WHERE RUID='"+ruid+"'";
 							PreparedStatement ps1 = con.prepareStatement(query);
 							ResultSet result10 = ps.executeQuery(query); 
