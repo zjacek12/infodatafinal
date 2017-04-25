@@ -33,7 +33,7 @@ try {
 	String userName = session.getAttribute("loginName").toString();
 	
 	/* People who've messaged you */
-	String query2="SELECT DISTINCT loginName, ruid FROM finalproject.accounts a JOIN finalproject.messages m ON a.ruid=m.fromRUID WHERE m.toRUID=" + myruid + " ORDER BY m.time DESC";
+	String query2="SELECT DISTINCT loginName, ruid FROM finalproject.accounts a JOIN finalproject.messages m ON a.ruid=m.fromRUID OR a.ruid=m.toRUID WHERE (m.toRUID=" + myruid + " OR m.fromRUID=" + myruid + ") AND NOT a.ruid=" + myruid + " ORDER BY m.time DESC";
 	Statement stmt1=conn.createStatement();
 	ResultSet rmf = stmt1.executeQuery(query2);
 %>
@@ -77,7 +77,15 @@ try {
   <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="about">
 	  
 	  <!-- Messages -->
-      <h4 class="w3-padding-16">Recent Messages</h4>
+      <h4 class="w3-padding-16"><b>Recent Messages</b></h4>
+      <table style="width:78%">
+      <col width="15%">
+      	<tr>
+      		<td></td>
+      		<td align="left"><i>Sent</i></td>
+      		<td align="right"><i>Received</i></td>
+      	</tr>
+      </table>
 	  <div style="width:100%">
 <% 
 	Statement stmt2=conn.createStatement();
@@ -89,23 +97,27 @@ try {
 		msg = stmt2.executeQuery(query3);
 %>
 	    <h4><b><%out.print(otherUser);%></b></h4>
-	    <table style="width:100%" border="2">	    	
+	    <table style="width:100%" border="2">	
+	    	<col width="10%">
+	    	<col width="70%">
+	    	<col width="20%">    	
 <% 
 		while(msg.next()) {
 			if(msg.getInt("fromRuid") == myruid) { // Sent from you
 %>
 			<tr>
-				<td>Sent</td>
-				<td><%out.print(msg.getString("message"));%></td>
-				<td><%out.print(msg.getInt("time"));%></td>
+				<td height=50><form action="deleteMessage.jsp" method="post"><input type="submit" value="Delete" class="w3-button w3-black">
+				<input type="hidden" name="to" value="<%out.print(otherRUID);%>"><input type="hidden" name="fro" value="<%out.print(myruid);%>"><input type="hidden" name="date" value="<%out.print(msg.getString("time"));%>"><input type="hidden" name="context" value="<%out.print(msg.getString("message"));%>"></form></td>
+				<td align="left"><%out.print(msg.getString("message"));%></td>
+				<td><%out.print(msg.getString("time"));%></td>
 			</tr>
 <%
 			} else { // Received
 %>
 			<tr>
-				<td>Received</td>
-				<td><%out.print(msg.getString("message"));%></td>
-				<td><%out.print(msg.getInt("time"));%></td>
+				<td height=50></td>
+				<td align="right"><%out.print(msg.getString("message"));%></td>
+				<td><%out.print(msg.getString("time"));%></td>
 			</tr>
 <%
 			}

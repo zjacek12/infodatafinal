@@ -75,7 +75,7 @@ try {
 	<form action="selectRequests.jsp" method="post">
 		<table style="width:100%" class="w3-table-all">
 			<tr>
-				<td><b>Ride: </b></td>
+				<td><b>Ride: </b><input type="hidden" name="offerID" value="<%= result.getInt("offerID") %>"/></td>
 			  	<td><b><%out.print(ruid); %></b></td>
 			  	<td><b><%out.print(result.getString("fromLocation")); %></b></td>
 			  	<td><b><%out.print(result.getString("toLocation")); %></b></td>
@@ -84,11 +84,11 @@ try {
 			</tr>
   			<tr bgcolor="#CCCCFF" colspan=2>
   				<td><b>Matching Requests </b></td>
-			  	<td>RUID</td>
-			  	<td>From</td>
-			  	<td>To</td>
-			  	<td>On</td>
-			  	<td>At</td>
+			  	<td><b>RUID</b></td>
+			  	<td><b>From</b></td>
+			  	<td><b>To</b></td>
+			  	<td><b>On</b></td>
+			  	<td><b>At</b></td>
 			</tr>
 			
 			<%
@@ -100,8 +100,8 @@ try {
 			while(result11.next()){
 			%>
 			<tr>
-				<td><input type="checkbox" name="selected" value="<%= result11.getInt("RUID") %>"></td>
-				<td><% out.print(result11.getString("RUID"));%></td>
+				<td><input type="checkbox" name="selected" value="<%= result11.getInt("requestID") %>"></td>
+				<td><% out.print(result11.getInt("RUID"));%><input type="hidden" name="selectedRUID" value="<%= result.getInt("RUID") %>"/></td>
 		  		<td><% out.print(result11.getString("fromLocation"));%></td>
 		  		<td><% out.print(result11.getString("toLocation"));%></td>
 		  		<td><%out.print(result.getString("departureTime").substring(0, 10)); %></td>

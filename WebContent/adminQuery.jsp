@@ -22,24 +22,26 @@ try {
 	
 	String fromLocation = request.getParameter("fromLocation");
 	String toLocation = request.getParameter("toLocation");
-	String startTime = request.getParameter("startTime");
-	String endTime = request.getParameter("endTime");
+	String sTime = request.getParameter("startTime");
+	String eTime = request.getParameter("endTime");
 	String userName = request.getParameter("userName");
 			
 	Statement stmt = conn.createStatement();
 	String query;
 	
-	if(fromLocation.equals("formNull")) {
-	}
-	if(toLocation.equals("formNull")) {
-	}
-	if(startTime.equals("")) {
-	}
-	if(endTime.equals("")) {
-	}
-	if(userName.equals("")) {
-	}
+	String startTime;
+	String endTime;
 	
+	if(sTime.equals("0000-00-00'T'00:00") || sTime.equals("")) {
+		startTime = "";
+	} else {
+		startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(sTime));
+	}
+	if(eTime.equals("0000-00-00'T'00:00") || eTime.equals("")) {
+		endTime = "";
+	} else {
+		endTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(eTime));
+	}
 	// All are null								#1
 	if(fromLocation.equals("formNull") && toLocation.equals("formNull") && startTime.equals("") && endTime.equals("") && userName.equals("")) {
 		query = "SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role=\"Driver\"";
@@ -56,11 +58,11 @@ try {
 	// startTime or endTime are set			#3
 	} else if(fromLocation.equals("formNull") && toLocation.equals("formNull") && !(startTime.equals("") && endTime.equals("")) && userName.equals("")) {
 		if(startTime.equals("")) {
-			query = "SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role=\"Driver\" AND arrivalTime<" + endTime;
+			query = "SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role=\"Driver\" AND arrivalTime<\"" + endTime + "\"";
 		} else if(endTime.equals("")) {
-			query = "SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role=\"Driver\" AND arrivalTime>" + startTime;
+			query = "SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role=\"Driver\" AND arrivalTime>\"" + startTime + "\"";
 		} else {
-			query = "SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role=\"Driver\" AND arrivalTime<" + endTime + " AND arrivalTime>" + startTime;
+			query = "SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role=\"Driver\" AND arrivalTime<\"" + endTime + "\" AND arrivalTime>\"" + startTime + "\"";
 		}
 	// userName is set							#4
 	} else if(fromLocation.equals("formNull") && toLocation.equals("formNull") && startTime.equals("") && endTime.equals("") && !userName.equals("")) {
@@ -75,11 +77,11 @@ try {
 			query += " AND toLocation=\"" + toLocation + "\"";
 		}
 		if(startTime.equals("")) {
-			query += " AND arrivalTime<" + endTime;
+			query += " AND arrivalTime<\"" + endTime + "\"";
 		} else if(endTime.equals("")) {
-			query += " AND arrivalTime>" + startTime;
+			query += " AND arrivalTime>\"" + startTime + "\"";
 		} else {
-			query += " AND arrivalTime<" + endTime + " AND arrivalTime>" + startTime;
+			query += " AND arrivalTime<\"" + endTime + "\" AND arrivalTime>\"" + startTime + "\"";
 		}
 	// 2 and 4 are set
 	} else if(!(fromLocation.equals("formNull") && toLocation.equals("formNull")) && startTime.equals("") && endTime.equals("") && !userName.equals("")) {
@@ -94,11 +96,11 @@ try {
 	} else if(fromLocation.equals("formNull") && toLocation.equals("formNull") && !(startTime.equals("") && endTime.equals("")) && !userName.equals("")) {
 		query = "SELECT COUNT(*) as cnt FROM finalproject.rideLog r JOIN finalproject.accounts a ON a.ruid=r.ruid WHERE r.role=\"Driver\" AND a.loginName=\"" + userName + "\"";
 		if(startTime.equals("")) {
-			query += " AND r.arrivalTime<" + endTime;
+			query += " AND r.arrivalTime<\"" + endTime + "\"";
 		} else if(endTime.equals("")) {
-			query += " AND r.arrivalTime>" + startTime;
+			query += " AND r.arrivalTime>\"" + startTime + "\"";
 		} else {
-			query += " AND r.arrivalTime<" + endTime + " AND r.arrivalTime>" + startTime;
+			query += " AND r.arrivalTime<\"" + endTime + "\" AND r.arrivalTime>\"" + startTime + "\"";
 		}
 	// all are set
 	} else {
@@ -110,11 +112,11 @@ try {
 			query += " AND r.toLocation=\"" + toLocation + "\"";
 		}
 		if(startTime.equals("")) {
-			query += " AND r.arrivalTime<" + endTime;
+			query += " AND r.arrivalTime<\"" + endTime + "\"";
 		} else if(endTime.equals("")) {
-			query += " AND r.arrivalTime>" + startTime;
+			query += " AND r.arrivalTime>\"" + startTime + "\"";
 		} else {
-			query += " AND r.arrivalTime<" + endTime + " AND r.arrivalTime>" + startTime;
+			query += " AND r.arrivalTime<\"" + endTime + "\" AND r.arrivalTime>\"" + startTime + "\"";
 		}
 	}
 	

@@ -27,27 +27,17 @@ try {
   	//get the parameter convert it to a data type Date.
 
   	 //Display the date
-  	String earlyDeparture = request.getParameter("earlyDeparture");
-  	String departureTime = request.getParameter("departureTime");
-  	String arrivalTime = request.getParameter("arrivalTime");
+  	String earlyDeparture = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(request.getParameter("earlyDeparture")));
+  	String departureTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(request.getParameter("departureTime")));
+  	String arrivalTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(request.getParameter("arrivalTime")));
   	String recurring = request.getParameter("recurring");
-  	
-  	
-  	
-  	/* SimpleDateFormat parseDate = new SimpleDateFormat("MM/dd/yyyy");
-  	SimpleDateFormat formatDate = new SimpleDateFormat("EEE, d MMM HH:mm:ss");
-  	try {
-  	java.sql.Date date = java.sql.Date.valueOf(formatDate.parse(earlyDeparture));
-  	} catch (Exception ex) {
-  		ex.printStackTrace();
-  	}
-  	String DisplayDate= formatDate.format(date); */
+  	String parkinglot = request.getParameter("parkinglot");
   	
   	out.print("early: " +earlyDeparture.toString() +"<br> departure: " +departureTime.toString()+"<br>arrival: " +arrivalTime.toString());
 	if(fromLocation == "" || toLocation == "" || departureTime == "") {
 		validated = false;
 	}
-	
+  	
 	if (validated) {
 		/* String insert = "INSERT INTO accounts(loginName, password) "
 				+ "VALUES ('"+loginName+"', '"+password+"')"; */
@@ -58,7 +48,8 @@ try {
 				"departureTime, "+
 				"arrivalTime, "+
 				"recurring, "+
-				"earlyDeparture)"+
+				"earlyDeparture, "+
+				"parkinglot)"+
 				
 				"VALUES"+
 				"('"+ruid+"', "+
@@ -67,7 +58,8 @@ try {
 				"'"+departureTime+"', "+
 				"'"+arrivalTime+"', "+
 				"'"+recurring+"', "+
-				"'"+earlyDeparture+"')";
+				"'"+earlyDeparture+"', "+
+				"'"+parkinglot+"')";
 		PreparedStatement ps = con.prepareStatement(insert);
 		ps.executeUpdate();
 		

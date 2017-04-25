@@ -72,7 +72,6 @@ try {
 	  </header>
 			
 		<form action="submitOffer.jsp" method="post">
-			<center>
 				<table cellpadding=4 cellspacing=2 border=0 class="w3-table-all" style="">
 					<tr bgcolor="#c8d8f8">
 						<td>
@@ -95,12 +94,18 @@ try {
 						</td>
 					</tr>
 					<tr bgcolor="#c8d8f8">
+						<td colspan=2>
+							<b>Parking Lot</b><br>
+							<input type="text" name="parkinglot" value="" />
+						</td>
+					</tr>
+					<tr bgcolor="#c8d8f8">
 						<td>
 							<b>Time you plan on leaving?</b><br>
 							<input type="datetime-local" name="departureTime"/>
 							<br>
 						</td>
-					<td>
+						<td>
 						 	<b>When do you want to arrive by?</b><br>
 							
 							<input type="datetime-local" name="arrivalTime"/>
@@ -131,11 +136,11 @@ try {
 					<tr bgcolor="#c8d8f8">
 						<td>
 							<label for="yesrecurring">Every Week</label>
-							<input type="radio" name="recurring" id="yesrecurring" value="true">
+							<input type="radio" name="recurring" id="yesrecurring" value="1">
 						</td>
 						<td>
 							<label for="norecurring">Only Once</label>
-							<input type="radio" name="recurring" id="norecurring" value="false" checked="checked">
+							<input type="radio" name="recurring" id="norecurring" value="0" checked="checked">
 						</td>
 					</tr>
 					<tr bgcolor="#c8d8f8">
@@ -144,7 +149,6 @@ try {
 						</td>
 					</tr>
 				</table>
-			</center>
 		</form>
 		<%
 		con.close();

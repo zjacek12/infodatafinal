@@ -21,12 +21,19 @@ try {
 	
 	out.println(myruid + ":");
 	
-	String[] ruidArray = request.getParameterValues("selected");
-	String message = "'Your request has been selected by "+session.getAttribute("loginName")+" click Accept to secure a spot <br><a href=\"profilePage.jsp\" class=\"w3-button w3-white w3-hover-black\">Accept</a>'";
-	
-	for(String s : ruidArray){
-		out.print("<br>ruid: "+s);
-		String query = "INSERT INTO finalproject.messages (fromRUID, toRUID, message, time) VALUES ("+myruid+", "+Integer.parseInt(s)+", "+message+", CURRENT_TIMESTAMP)";
+	String[] requestIDArray = request.getParameterValues("selected");
+	String[] ruidArray = request.getParameterValues("selectedRUID");
+	String offerID = request.getParameter("offerID");
+	String message = "";
+	for(int i = 0; i < requestIDArray.length ; i++){
+		message = "'Your request has been selected by "+session.getAttribute("loginName")+
+				" click Accept to secure a spot "+
+				"<br><form action=\"matchRider.jsp\" method=\"post\">"+
+				"<input type=\"hidden\" name=\"offerID\" value="+offerID+"/>"+
+				"<input type=\"hidden\" name=\"requestID\" value="+requestIDArray[i]+"/>"+
+				"<input type=\"submit\" class=\"w3-button w3-white w3-hover-black\" value=\"Accept\"/></form>'";
+		out.print("<br>ruid: "+ruidArray[i]+" requestID: "+requestIDArray[i]);
+		String query = "INSERT INTO finalproject.messages (fromRUID, toRUID, message, time) VALUES ("+myruid+", "+Integer.parseInt(ruidArray[i])+", "+message+", CURRENT_TIMESTAMP)";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.executeUpdate();
 		ps.close();

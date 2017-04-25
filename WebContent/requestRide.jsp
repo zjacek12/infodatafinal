@@ -117,12 +117,12 @@ try {
 							</select>
 						</td>
 					</tr>
-					<!-- <tr bgcolor="#c8d8f8">
-						<td>
+					<tr bgcolor="#c8d8f8">
+						<td colspan=2>
 							<b>Parking Lot</b><br>
-							<intput type="text" name="parkinglot" value="" />
+							<input type="text" name="parkinglot" value="" />
 						</td>
-					</tr> -->
+					</tr>
 					<tr bgcolor="#c8d8f8">
 						<td>
 							<b>How early can you leave?</b><br>
@@ -138,7 +138,7 @@ try {
 						</td>
 					</tr>
 					<tr bgcolor="#c8d8f8">
-						<td>
+						<td colspan=2>
 						 	<b>When do you want to arrive by:</b>
 							
 							<input type="datetime-local" name="arrivalTime"/>
