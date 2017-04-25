@@ -6,7 +6,13 @@
 <!DOCTYPE html>
 
 <html>
-<title>Profile Page</title>
+
+<% 
+/* Instance userName */
+String searchName = request.getParameter("searchName");
+%>
+
+<title><%out.print(searchName + "'s Profile");%></title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -15,9 +21,7 @@
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 
 <%
-try {
-	/* Instance RUID */
-	int myruid = Integer.parseInt(session.getAttribute("ruid").toString());
+try {	
 	/* Setup SQL connection */
 	String url="jdbc:mysql://infodataprojectdb.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/finalproject";
 	String username="alexarminjacek";
@@ -29,60 +33,69 @@ try {
 	/* Queries and variables */
 	String query;
 	
+	/* Match Username to RUID */
+	query="SELECT ruid FROM finalproject.accounts WHERE loginName='" + searchName+"'";
+	Statement stmt6 = conn.createStatement();
+	ResultSet id = stmt6.executeQuery(query);
+	id.next();
+	int thisruid = id.getInt("ruid");
+	id.close();
+	stmt6.close();
+	
 	/* Vehicle Information */
-	query="SELECT * FROM finalproject.car WHERE ruid=" + myruid;
+	query="SELECT * FROM finalproject.car WHERE ruid=" + thisruid;
 	ResultSet vi = stmt.executeQuery(query);
-
 	
 	/* Leader Board */
 	query="SELECT * FROM finalproject.accounts ORDER BY rankScore";
 	Statement stmt1=conn.createStatement();
 	ResultSet lb = stmt1.executeQuery(query);
 	
-	/* Login Name */
-	query="SELECT loginName FROM finalproject.accounts WHERE ruid=" + myruid;
-	Statement stmt2=conn.createStatement();
-	ResultSet lN = stmt2.executeQuery(query);
-	lN.next();
-	
 	/* Contact Information */
-	query="SELECT * FROM finalproject.accounts WHERE ruid=" + myruid;
+	query="SELECT * FROM finalproject.accounts WHERE ruid=" + thisruid;
 	Statement stmt3=conn.createStatement();
 	ResultSet ci = stmt3.executeQuery(query);
 	ci.next();
 	
-	
 	/* Comments */
-	query="SELECT * FROM finalproject.ratings WHERE toRUID=" + myruid;
+	query="SELECT * FROM finalproject.ratings WHERE toRUID=" + thisruid;
 	Statement stmt4=conn.createStatement();
 	ResultSet pc = stmt4.executeQuery(query);
 	pc.next();
 	pc.close();
 	
 	/* Rating Calculations */
-	query="SELECT SUM(rating) as sum FROM finalproject.ratings WHERE toRUID=" + myruid;
+	query="SELECT SUM(rating) as sum FROM finalproject.ratings WHERE toRUID=" + thisruid;
 	Statement stmt5=conn.createStatement();
 	ResultSet pr = stmt5.executeQuery(query);
-	pr.next();
-	double sumR = pr.getDouble("sum");
+	double sumR = 0;
+	if(pr.next()){
+		sumR = pr.getDouble("sum");
+	}
 	pr.close();
 	
-	query="SELECT COUNT(*) as cnt FROM finalproject.ratings WHERE toRUID=" + myruid;
+	query="SELECT COUNT(*) as cnt FROM finalproject.ratings WHERE toRUID=" + thisruid;
 	pr = stmt5.executeQuery(query);
-	pr.next();
-	double numR = pr.getInt("cnt");
+	double numR = 0;
+	if(pr.next()) {
+		numR = pr.getInt("cnt");
+	}
 	pr.close();
 	
-	query="SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role='Driver' AND RUID=" + myruid;
+	query="SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role='Driver' AND RUID=" + thisruid;
 	pr = stmt5.executeQuery(query);
-	pr.next(); 
-	int numGiven = pr.getInt("cnt");
+	int numGiven = 0;
+	if(pr.next()) {
+		numGiven = pr.getInt("cnt");
+	}
 	pr.close();
 	
-	query="SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role='Driver' AND RUID=" + myruid;
+	query="SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role='Driver' AND RUID=" + thisruid;
 	pr = stmt5.executeQuery(query);
-	pr.next();
-	int numTaken = pr.getInt("cnt");
+	int numTaken = 0;
+	if(pr.next()){
+		numTaken = pr.getInt("cnt");
+	}
 	pr.close();
 	stmt5.close();
 	
@@ -93,12 +106,8 @@ try {
 	
 <!-- Top Title -->
 <header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
-  <div class="w3-left w3-padding">Profile : <%out.print(lN.getString("loginName"));%></div>
+  <div class="w3-left w3-padding">Profile : <%out.print(searchName);%></div>
 </header>
-
-<%
-	lN.close();
-%>
 
 <!-- Logout -->
 <div style="float:right;margin-right:50px">
@@ -116,17 +125,8 @@ try {
   <header>
   <div class="w3-padding-32" style="center">
     <div class="w3-bar">
-      <a href="profilePage.jsp" class="w3-bar-item w3-black w3-button">Profile</a>
-      <a href="myRides.jsp" class="w3-bar-item w3-button w3-hover-black">Offered Rides</a>
-      <a href="requestedRides.jsp" class="w3-bar-item w3-button w3-hover-black">Requested Rides</a>
+      <a href="profilePage.jsp" class="w3-bar-item w3-hover-black w3-button">Return to My Profile</a>
       <a href="messenger.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
-      <a href="editProfile.jsp" class="w3-bar-item w3-button w3-hover-black">Edit Profile</a>
-      <div class="w3-right"  style="width:30%"><form action="profileViewable.jsp" method="get">
-      <input type="search" name="searchName" class="w3-input" value="" placeholder="Search by: User Name" 
-      size=3 maxlength=20/>
-      <input type="submit" value="Submit" class="w3-button w3-hover-black"
-      class="w3-bar-item w3-button w3-hover-black">
-      </form></div>
     </div>
   </div>
   </header>
@@ -150,30 +150,6 @@ try {
 		</div>
 	  </div>
 	  <div style="clear:both"></div>
-      
-      <hr class="w3-opacity">
-	  
-	  <!-- Select Offer or Request Ride -->
-      <h4 class="w3-padding-16 w3-center">Which would you like to do?</h4>
-      <div class="w3-row-padding" style="margin:0 -16px">
-        <div class="w3-half w3-margin-bottom">
-          <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-            <li class="w3-black w3-xlarge w3-padding-32">Offer A Ride</li>
-            <li class="w3-light-grey w3-padding-24">
-              <a href="offerRide.jsp" class="w3-button w3-white w3-padding-large">Enter</a>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="w3-half">
-          <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-            <li class="w3-black w3-xlarge w3-padding-32">Request A Ride</li>
-            <li class="w3-light-grey w3-padding-24">
-              <a href="requestRide.jsp" class="w3-button w3-white w3-padding-large">Enter</a>
-            </li>
-          </ul>
-        </div>
-      </div>
   </div>
   
   <!-- Vehicle Information -->
@@ -209,15 +185,15 @@ try {
     <div class="w3-content" style="max-width:600px">
       <h4 class="w3-center"><b>Contact Information</b></h4>
       <div class="w3-section">
-        <label>Name</label>
+        <label><b>Name</b></label>
         <p><%out.print(ci.getString("firstName")); out.print(" " +ci.getString("lastName"));%></p>
       </div>
       <div class="w3-section">
-        <label>Phone</label>
+        <label><b>Phone</b></label>
         <p><%out.print(ci.getString("phone"));%></p>
       </div>
       <div class="w3-section">
-        <label>Email</label>
+        <label><b>Email</b></label>
         <p><%out.print(ci.getString("email"));%></p>
       </div>
     </div>
@@ -260,7 +236,6 @@ try {
 	/* Close stmt and conn */
 	stmt.close();
  	stmt1.close();
- 	stmt2.close();
 	stmt3.close();
 	stmt4.close();
 	conn.close();

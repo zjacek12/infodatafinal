@@ -9,37 +9,19 @@
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
-	<form action="forgotWEmail.jsp" method="get">
-		<center>
-			<table cellpadding=4 cellspacing=2 border=0 class="w3-table-all">
-				<th bgcolor="#CCCCFF">
-					<font size=5>Retrieve by email</font>
-				</th>
-				<tr bgcolor="#CCCCFF">
-					<td valign=top>
-					<b>Email: </b> 
-					<input type="text" name="email" value="" size=45  maxlength=125>
-					<input type="submit" value="Send email">
-					<br></td>
-				</tr>
-			</table>
-		</center>
-	</form>
-	<form action="forgotWUserName.jsp" method="get">
-		<center>
-			<table cellpadding=4 cellspacing=2 border=0 class="w3-table-all">
-				<th bgcolor="#CCCCFF">
-					<font size=5>Retrieve by Username</font>
-				</th>
-				<tr bgcolor="#CCCCFF">
-					<td>
-					<b>Retrieve by Username: </b> 
-					<input type="text" name="userName" value="" size=45  maxlength=125>
-					<input type="submit" value="Send email">
-					<br></td>
-				</tr>
-			</table>
-		</center>
+	<form action="forgotWEmail.jsp" method="post">
+		<table cellpadding=4 cellspacing=2 border=0 class="w3-table-all">
+			<th bgcolor="#CCCCFF">
+				<font size=5>Retrieve by email</font>
+			</th>
+			<tr bgcolor="#CCCCFF">
+				<td valign=top>
+				<b>Email: </b> 
+				<input type="text" name="email" value="" size=45  maxlength=125>
+				<input type="submit" value="Send email">
+				<br></td>
+			</tr>
+		</table>
 	</form>
 </body>
 </html>

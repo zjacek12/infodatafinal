@@ -37,9 +37,13 @@ try {
 		con.close();
 		out.print("Please go back and create an account!");
 	}
-	String redirectURL = "http://ec2-35-163-179-160.us-west-2.compute.amazonaws.com:8080/cs336Final/profilePage.jsp?";
-    /* response.sendRedirect(redirectURL); */
-	response.sendRedirect("profilePage.jsp");
+	
+	if(loginName.equalsIgnoreCase("admin")) {
+		response.sendRedirect("admin.jsp");
+	} else {
+    	/* response.sendRedirect(redirectURL); */
+		response.sendRedirect("profilePage.jsp");
+	}
 	
 } catch (Exception ex) {
 	out.print("something failed failed" + "<br>");

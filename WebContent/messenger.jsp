@@ -29,14 +29,10 @@ try {
 	String password="alexarminjacek";
 	Connection conn=DriverManager.getConnection(url, username, password);
 	Statement stmt=conn.createStatement();
+
+	String userName = session.getAttribute("loginName").toString();
 	
-	/* Your loginName */
-	String query1="SELECT loginName FROM finalproject.accounts WHERE ruid=" + myruid;
-	ResultSet lN = stmt.executeQuery(query1);
-	lN.next();
-	String userName = lN.getString("loginName");
-	
-	/* People you've messaged */
+	/* People who've messaged you */
 	String query2="SELECT DISTINCT loginName, ruid FROM finalproject.accounts a JOIN finalproject.messages m ON a.ruid=m.fromRUID WHERE m.toRUID=" + myruid + " ORDER BY m.time DESC";
 	Statement stmt1=conn.createStatement();
 	ResultSet rmf = stmt1.executeQuery(query2);
@@ -44,12 +40,8 @@ try {
 	
 <!-- Top Title -->
 <header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
-  <div class="w3-left w3-padding">Messages : <%out.print(lN.getString("loginName"));%></div>
+  <div class="w3-left w3-padding">Messages : <%= userName %></div>
 </header>
-
-<%
-	lN.close();
-%>
 
 <!-- Logout -->
 <div style="float:right; margin-right:50px">
@@ -71,6 +63,12 @@ try {
       <a href="myRides.jsp" class="w3-bar-item w3-button w3-hover-black">Offered Rides</a>
       <a href="requestedRides.jsp" class="w3-bar-item w3-button w3-hover-black">Requested Rides</a>
       <a href="messenger.jsp" class="w3-bar-item w3-button w3-black">Messaging</a>
+      <a href="editProfile.jsp" class="w3-bar-item w3-button w3-hover-black">Edit Profile</a>
+      <div class="w3-right"  style="width:30%"><form action="profileViewable.jsp" method="get">
+      <input type="search" name="userName" class="w3-input" value="" placeholder="Search by: User Name" 
+	  size=3 maxlength=20/>
+	  <input type="submit" value="Submit" class="w3-button w3-hover-black"
+	  class="w3-bar-item w3-button w3-hover-black">
     </div>
   </div>
   </header>

@@ -55,6 +55,13 @@ try {
 		      <a href="myRides.jsp" class="w3-bar-item w3-button w3-hover-black">Offered Rides</a>
 		      <a href="requestedRides.jsp" class="w3-bar-item w3-button w3-hover-black">Requested Rides</a>
 		      <a href="messages.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
+		      <a href="editProfile.jsp" class="w3-bar-item w3-button w3-hover-black">Edit Profile</a>
+		      <div class="w3-right"  style="width:30%"><form action="profileViewable.jsp" method="get">
+		      <input type="search" name="userName" class="w3-input" value="" placeholder="Search by: User Name" 
+		      size=3 maxlength=20/>
+		      <input type="submit" value="Submit" class="w3-button w3-hover-black"
+		      class="w3-bar-item w3-button w3-hover-black">
+		      </form></div>
 		    </div>
 		  </div>
 		  </header>

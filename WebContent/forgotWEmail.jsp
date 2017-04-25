@@ -3,7 +3,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <body>
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
@@ -15,16 +15,45 @@ try {
 	
 	String email = request.getParameter("email");
 	
-	String query = "SELECT loginName, password FROM accounts WHERE email ='"+email+"'";
+	String query = "SELECT COUNT(*) as cnt FROM finalproject.accounts WHERE email='"+email+"'";
 	
 	PreparedStatement ps = con.prepareStatement(query);
 	ResultSet result = ps.executeQuery(query);
-	if(result.next()){
-		out.print("needs to be made into an email");
-		out.print("<br>login: "+result.getString("loginName"));
-		out.print("<br>password: "+result.getString("password"));
+	result.next();
+	int cnt = result.getInt("cnt");
+	if(cnt == 1){
+		out.print("<br>You have already recieved an email...<br>"); 
+		query = "SELECT loginName, password FROM finalproject.accounts WHERE email='"+email+"'";
+		PreparedStatement ps1 = con.prepareStatement(query);
+		ResultSet result1 = ps1.executeQuery(query);
+		result1.next();
+		String loginName = result1.getString("loginName");
+		String password = result1.getString("password");
+		String insert = "INSERT INTO finalproject.SEND_EMAIL"+
+				"(fromEmail, "+
+				"toEmail, "+
+				"datetime, "+
+				"subject, "+
+				"content)"+
+				"VALUES"+
+				"('rideshare@rides.com', "+
+				"'"+email+"', "+
+				"NOW(), "+
+				"'RideShare Login Credentials', "+
+				"'Login: "+loginName+" Password: "+password+"')";
+		PreparedStatement ps2 = con.prepareStatement(insert);
+		ps2.executeUpdate();
+		/* out.print("<br>login: "+result.getString("loginName"));
+		out.print("<br>password: "+result.getString("password")); */
+		result.close();
+		ps.close();
+ 		ps1.close();
+ 		ps2.close();
 		con.close();
+		response.sendRedirect("index.html");
 	} else {
+		result.close();
+		ps.close();
 		con.close();
 		out.print("Please go back and create an account!");
 	}

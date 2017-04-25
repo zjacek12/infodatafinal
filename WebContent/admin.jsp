@@ -45,61 +45,60 @@
 
   <!-- Lookup by time, user, origin, or destination -->
   <div class="w3-center w3-container w3-white w3-padding-16">
-  	  <h4>View Total Rides By:</h4>
-	  <div style="clear:both"></div>
+  	  <h4><b>View Total Rides By:</b></h4>
 	  <form action="adminQuery.jsp" method="get">
-			<table border="1px solid black">
-				<tr class="w3-white">
-					<td>
-						<b>From Campus</b><br>
-						<select name="fromLocaction">
-							<option value="formNull"> --Insert Here-- </option>
-							<option value="formCA"> College Ave </option>
-							<option value="fromL"> Livingston </option>
-							<option value="fromB"> Busch </option>
-							<option value="formCD"> Cook/Douglass </option>
-						</select>
-					</td>
-					<td>
-						<b>To Campus</b><br>
-						<select name="toLocation">
-							<option value="formNull"> --Insert Here-- </option>
-							<option value="toC"> College Ave </option>
-							<option value="toL"> Livingston </option>
-							<option value="toB"> Busch </option>
-							<option value="toCD"> Cook/Douglass </option>
-						</select>
-					</td>
-				</tr>
-				<tr class="w3-white">
-<%-- 				<fmt:formatDate var='formattedDate' value='${date}' pattern="EEE, d MMM hh:mm aaa" type='both' timeStyle='medium'/> --%>						<td>
-						<b>Rides made from (start time/date):</b><br>
+				<table cellpadding=4 cellspacing=2 border=0 class="w3-table-all">
+					<tr bgcolor="#c8d8f8">
+						<td>
+							<b>From Campus</b><br>
+							<select name="fromLocation">
+								<option value="formNull"> --Insert Here-- </option>
+								<option value="College Ave"> College Ave </option>
+								<option value="Livingston"> Livingston </option>
+								<option value="Busch"> Busch </option>
+								<option value="Cook/Douglass"> Cook/Douglass </option>
+							</select>
+						</td>
+						<td>
+							<b>To Campus</b><br>
+							<select name="toLocation">
+								<option value="formNull"> --Insert Here-- </option>
+								<option value="College Ave"> College Ave </option>
+								<option value="Livingston"> Livingston </option>
+								<option value="Busch"> Busch </option>
+								<option value="Cook/Douglass"> Cook/Douglass </option>
+							</select>
+						</td>
+					</tr>
+					<tr bgcolor="#c8d8f8">
+						<td>
+							<b>Start Date</b><br>
 							
-						<input type="datetime-local" name="startTime" <%-- value="${formattedDate}" --%>/>
-						<br>
-					</td>
-					<td>
-						<b>Rides made until (end time/date):</b><br>
+							<input type="datetime-local" name="startTime" value=""/>
+							<br>
+						</td>
+						<td>
+							<b>End Date</b><br>
 							
-						<input type="datetime-local" name="endTime" <%-- value="${formattedDate}" --%>/>
-						<br>
-					</td>
-				</tr>
-				<tr class="w3-white">
-					<td>
-					 	<b>Search by userName:</b>
+							<input type="datetime-local" name="endTime" value=""/>
+							<br>
+						</td>
+					</tr>
+					<tr bgcolor="#c8d8f8">
+						<td align=center>
+						 	<b>Search by userName</b>
 							
-						<input type="text" name="userName">
-						<br>
-					</td>
-				</tr>
-				<tr class="w3-white">
-					<td align=center colspan=2>
-						<input type="submit" value="Submit Request" class="w3-bar-item w3-button w3-hover-black">
-					</td>
-				</tr>
-			</table>
-      </form> 
+							<input type="text" name="userName" value=""/>
+							<br>
+						</td>
+					</tr>
+					<tr bgcolor="#c8d8f8">
+						<td align=center colspan=2>
+							<input type="submit" value="Submit Request" class="w3-bar-item w3-button w3-hover-black">
+						</td>
+					</tr>
+				</table>
+		</form>
   </div>       
   
   <hr class="w3-opacity">

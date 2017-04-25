@@ -12,117 +12,111 @@
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
 
 <form action="loginPage.jsp" method="get">
-	<center>
-		<table cellpadding=4 cellspacing=2 border=0 class="w3-table-all">
-			<th bgcolor="#CCCCFF" colspan=2>
-				<font size=5>USER LOGIN</font>
+	<table class="w3-table-all">
+		<th bgcolor="#CCCCFF" colspan=2>
+			<font size=5>USER LOGIN</font>
+			<br>
+			<font size=1><sup>*</sup> Required Fields</font>
+		</th>
+		<tr bgcolor="#c8d8f8">
+			<td valign=top colspan=2>
+				<b>User Name<sup>*</sup></b>
 				<br>
-				<font size=1><sup>*</sup> Required Fields</font>
-			</th>
-			<tr bgcolor="#c8d8f8">
-				<td valign=top colspan=2>
-					<b>User Name<sup>*</sup></b>
-					<br>
-					<input type="text" name="loginName" size=30 value=""  maxlength=10>
-				</td>
-			</tr>
-			<tr bgcolor="#c8d8f8">
-				<td valign=top>
-					<b>Password<sup>*</sup></b> 
-					<br>
-					<input type="password" name="password" size=30 value=""  maxlength=10><br>
-				</td>
-			</tr>
-			<tr bgcolor="#c8d8f8">
-				<td  align=center colspan=2>
-					<input type="submit" value="Submit"> <input type="reset"  value="Reset">
-				</td>
-			</tr>
-		</table>
-	</center>
+				<input type="text" name="loginName" size=30 value=""  maxlength=10>
+			</td>
+		</tr>
+		<tr bgcolor="#c8d8f8">
+			<td valign=top>
+				<b>Password<sup>*</sup></b> 
+				<br>
+				<input type="password" name="password" size=30 value=""  maxlength=10><br>
+			</td>
+		</tr>
+		<tr bgcolor="#c8d8f8">
+			<td  align=center colspan=2>
+				<input type="submit" value="Submit"> <input type="reset"  value="Reset">
+			</td>
+		</tr>
+	</table>
 </form>
 <form action="forgot.html" method="get">
-	<center>
-		<table cellpadding=4 cellspacing=2 border=0 class="w3-table-all">
-			<th bgcolor="#CCCCFF" colspan=2>
+	<table class="w3-table-all">
+		<tr bgcolor="#CCCCFF">
+			<td align=center colspan=2>
 				<input type="submit" value="Forgot Credenctials">
-			</th>
-		</table>
-	</center>
+			</td>
+		</tr>
+	</table>
 </form>
 <form action="createAccount.jsp" method="post">
-	<center>
-		<table cellpadding=4 cellspacing=2 border=0 class="w3-table-all">
-			<th bgcolor="#CCCCFF" colspan=2>
-				<font size=5>USER REGISTRATION</font>
+	<table class="w3-table-all">
+		<th bgcolor="#CCCCFF" colspan=2>
+			<font size=5>USER REGISTRATION</font>
+			<br>
+			<font size=1><sup>*</sup> Required Fields</font>
+		</th>
+		<tr bgcolor="#c8d8f8">
+			<td valign=top> 
+				<b>First Name<sup>*</sup></b> 
 				<br>
-				<font size=1><sup>*</sup> Required Fields</font>
-			</th>
-			<tr bgcolor="#c8d8f8">
-				<td valign=top> 
-					<b>First Name<sup>*</sup></b> 
-					<br>
-				<input type="text" name="firstName" value="" size=15 maxlength=20></td>
-				<td  valign=top>
-					<b>Last Name<sup>*</sup></b>
-					<br>
-				<input type="text" name="lastName" value="" size=15 maxlength=20></td>
-			</tr>
-			<tr bgcolor="#c8d8f8">
-				<td valign=top colspan=2>
-					<b>E-Mail<sup>*</sup></b> 
-					<br>
-					<input type="email" name="email" value="" size=25  maxlength=125>
-				<br></td>
-			</tr>
-			<tr bgcolor="#c8d8f8">
-				<td valign=top colspan=2>
-					<b>User Name<sup>*</sup></b>
-					<br>
-					<input type="text" name="loginName" size=10 value=""  maxlength=10>
-				</td>
-			</tr>
-			<tr bgcolor="#c8d8f8">
-				<td valign=top>
-					<b>Password<sup>*</sup></b> 
-					<br>
-					<input type="password" name="password1" size=10 value=""  
-				maxlength=10></td>
-				<td  valign=top>
-					<b>Confirm Password<sup>*</sup></b>
-					<br>
-					<input type="password" name="password2" size=10 value=""  
-				maxlength=10></td>
-			<br>
-			</tr>
-			<tr bgcolor="#c8d8f8">
-				<td valign=top>
-					<b>RUID<sup>*</sup></b> 
-					<br>
-					<input type="text" name="ruid" size=20 value=""  
-				maxlength=20></td>
-				<td  valign=top>
-					<b>Phone Number</b>
-					<br>
-					<input type="text" name="phoneNumber" size=20 value=""  
-				maxlength=20></td>
-			<br>
-			</tr>
-			<tr bgcolor="#c8d8f8">
-				<td valign=top colspan=2>
-					<b>Address</b> 
-					<br>
-					<input type="text" name="address" value="" size=25  maxlength=125>
-				<br></td>
-			</tr>
-			<tr bgcolor="#c8d8f8">
-				<td  align=center colspan=2>
-					<input type="submit" value="Submit"> <input type="reset"  
-					value="Reset">
-				</td>
-			</tr>
-		</table>
-	</center>
+			<input type="text" name="firstName" value="" size=15 maxlength=20></td>
+			<td  valign=top>
+				<b>Last Name<sup>*</sup></b>
+				<br>
+			<input type="text" name="lastName" value="" size=15 maxlength=20></td>
+		</tr>
+		<tr bgcolor="#c8d8f8">
+			<td valign=top colspan=2>
+				<b>E-Mail<sup>*</sup></b> 
+				<br>
+				<input type="email" name="email" value="" size=25  maxlength=125>
+			<br></td>
+		</tr>
+		<tr bgcolor="#c8d8f8">
+			<td valign=top colspan=2>
+				<b>User Name<sup>*</sup></b>
+				<br>
+				<input type="text" name="loginName" size=10 value=""  maxlength=10>
+			</td>
+		</tr>
+		<tr bgcolor="#c8d8f8">
+			<td valign=top>
+				<b>Password<sup>*</sup></b> 
+				<br>
+				<input type="password" name="password1" size=10 value=""  
+			maxlength=10></td>
+			<td  valign=top>
+				<b>Confirm Password<sup>*</sup></b>
+				<br>
+				<input type="password" name="password2" size=10 value=""  
+			maxlength=10></td>
+		</tr>
+		<tr bgcolor="#c8d8f8">
+			<td valign=top>
+				<b>RUID<sup>*</sup></b> 
+				<br>
+				<input type="text" name="ruid" size=20 value=""  
+			maxlength=20></td>
+			<td  valign=top>
+				<b>Phone Number</b>
+				<br>
+				<input type="text" name="phoneNumber" size=20 value=""  
+			maxlength=20></td>
+		</tr>
+		<tr bgcolor="#c8d8f8">
+			<td valign=top colspan=2>
+				<b>Address</b> 
+				<br>
+				<input type="text" name="address" value="" size=25  maxlength=125>
+			<br></td>
+		</tr>
+		<tr bgcolor="#c8d8f8">
+			<td  align=center colspan=2>
+				<input type="submit" value="Submit"> <input type="reset"  
+				value="Reset">
+			</td>
+		</tr>
+	</table>
 </form>
 		<!-- </td>
 		<td>
