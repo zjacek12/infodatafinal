@@ -62,7 +62,7 @@ try {
 	      <a href="messenger.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
 	      <a href="editProfile.jsp" class="w3-bar-item w3-button w3-hover-black">Edit Profile</a>
 	      <div class="w3-right"  style="width:30%"><form action="profileViewable.jsp" method="get">
-      	  <input type="search" name="userName" class="w3-input" value="" placeholder="Search by: User Name" 
+      	  <input type="search" name="searchName" class="w3-input" value="" placeholder="Search by: User Name" 
      	  size=3 maxlength=20/>
       	  <input type="submit" value="Submit" class="w3-button w3-hover-black"
           class="w3-bar-item w3-button w3-hover-black">
