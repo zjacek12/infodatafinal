@@ -101,16 +101,17 @@ try {
 	/* Rating Calculation */
 	double avgR = sumR/numR;
 	double avgP = (avgR/5) * 100;
+	
+	/* Comments */
+	query="SELECT * FROM finalproject.ratings WHERE toRUID=" + myruid;
+	Statement stmt7 = conn.createStatement();
+	ResultSet com = stmt7.executeQuery(query);
 %>
 	
 <!-- Top Title -->
 <header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
   <div class="w3-left w3-padding">Profile : <%out.print(lN.getString("loginName"));%></div>
 </header>
-
-<%
-	lN.close();
-%>
 
 <!-- Logout -->
 <div style="float:right;margin-right:50px">
@@ -176,6 +177,44 @@ try {
 		</div>
 	  </div> 
 	  <div style="clear:both"></div>
+	  
+	  <hr class="w3-opacity">
+	  
+	  <!-- User Comments -->
+	  <div align=center style="width:100%">
+	    <h4><b>User Comments</b></h4>
+	  	<table style="width:80%" border="1">
+	  		<col width=20%>
+	  		<col width=75% align=center>
+	  		<col width=5%>
+	  		<tr>
+	  			<th><%out.print(lN.getString("loginName"));%>'s Role</th>
+	  			<th>Comment</th>
+	  			<th>Rating</th>
+	  		</tr>
+<%
+	while(com.next()) {
+		if(com.getString("role").equals("Driver")) {
+%>
+			<tr>
+				<td>Passenger</td>
+				<td><%out.print(com.getString("thecomment"));%></td>
+				<td><%out.print(com.getInt("rating"));%></td>
+			</tr>
+<%
+		} else {
+%>
+			<tr>
+				<td>Driver</td>
+				<td><%out.print(com.getString("thecomment"));%></td>
+				<td><%out.print(com.getInt("rating"));%></td>
+			</tr>
+<%
+		}
+	}
+%>
+	  	</table>
+	  </div>
       
       <hr class="w3-opacity">
 	  
@@ -284,11 +323,14 @@ try {
   <div class="w3-black w3-center w3-padding-24">Made by Alex Marek, Jacek Zarski & Armin Grossrieder</div>
   <%
 	/* Close stmt and conn */
+	lN.close();
+	com.close();
 	stmt.close();
  	stmt1.close();
  	stmt2.close();
 	stmt3.close();
 	stmt4.close();
+	stmt7.close();
 	conn.close();
   }
 	catch(Exception e)

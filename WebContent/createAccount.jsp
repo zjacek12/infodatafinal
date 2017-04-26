@@ -71,7 +71,6 @@ try {
 		str = "SELECT COUNT(*) as cnt FROM accounts";
 		result = stmt.executeQuery(str);
 		result.next();
-		System.out.println("Here");
 		int countAccN = result.getInt("cnt");
 		
 		con.close();
@@ -79,7 +78,6 @@ try {
 		 
 		int updateAcc = (countAcc != countAccN) ? 1 : 0;
 		
-		System.out.println(updateAcc);
 		if (updateAcc > 0) {
 			
 			out.print("New Account Name: " + loginName + "<br> Password: " + password1);

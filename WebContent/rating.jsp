@@ -38,7 +38,7 @@ try {
 	rl.next();
 	
 	if(rl.getString("role").equals("Driver")) {
-		String query2 = "DELETE FROM finalproject.offeredRides WHERE offerID="+rideId;
+		String query2 = "DELETE FROM finalproject.offeredRides WHERE offerID="+rideId+" AND recurring=0";
 		PreparedStatement ps2 = conn.prepareStatement(query2);
 		ps2.executeUpdate();
 		ps2.close();

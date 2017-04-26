@@ -41,6 +41,7 @@ try {
 		ResultSet rideInfo = stmt1.executeQuery(query);
 		rideInfo.next();
 		if(check2.getInt("cnt") < 1){
+			
 			insert = "INSERT INTO finalproject.rideLog " +
 					"(RUID, "+
 					"rideID, "+
@@ -65,6 +66,9 @@ try {
 			ps1.executeUpdate();
 			ps1.close();
 		}
+		
+		stmt2.close();
+		check2.close();
 
 		insert = "INSERT INTO finalproject.rideLog " +
 				"(RUID, "+
@@ -101,7 +105,14 @@ try {
 		PreparedStatement ps3 = con.prepareStatement(query);
 		ps3.executeUpdate();
 		ps3.close();
+		stmt1.close();
 		rideInfo.close();
+		
+		query = "DELETE FROM finalproject.requestedRides WHERE requestID="+requestID+" AND recurring=0";
+		PreparedStatement ps5 = con.prepareStatement(query);
+		ps5.executeUpdate();
+		ps5.close();
+		
 		con.close();
 	  	
 	  	response.sendRedirect("messenger.jsp");

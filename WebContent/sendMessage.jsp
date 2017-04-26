@@ -19,7 +19,9 @@ try {
 	out.println(myruid + ":");
 	
 	String toName = request.getParameter("toName");
-	String message = request.getParameter("message");
+	String mssge = request.getParameter("message");
+	
+	String message = mssge.replaceAll("'", "\'");
 	
 	Statement stmt = conn.createStatement();
 	

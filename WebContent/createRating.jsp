@@ -16,9 +16,11 @@ try {
 	Statement stmt = conn.createStatement();
 
 	String score = request.getParameter("score");
-	String cmnt = request.getParameter("cmnt");
+	String cmnte = request.getParameter("cmnt");
 	String toid = request.getParameter("toRUID");
 	String role = request.getParameter("role");
+	
+	String cmnt = cmnte.replaceAll("'", "\'");
 	
 	String query;
 	

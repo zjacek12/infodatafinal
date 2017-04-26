@@ -70,7 +70,6 @@ try {
 		 
 		int updateAcc = (countAcc != countAccN) ? 1 : 0;
 		
-		System.out.println(updateAcc);
 		if (updateAcc > 0) {
 			response.sendRedirect("profilePage.jsp");
 		} else {

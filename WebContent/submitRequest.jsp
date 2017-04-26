@@ -81,7 +81,7 @@ try {
 			out.print("early departure type and val"+earlyDeparture);
 		}
 		
-		response.sendRedirect("profilePage.jsp");
+		response.sendRedirect("showAd.jsp");
 	} else {
 		out.print("<br> Go back and check your input");
 	}

@@ -28,11 +28,15 @@ try {
 		response.sendRedirect("admin.jsp");
 	}
   	
-	String query = "SELECT loginName, password, RUID FROM accounts WHERE loginName ='"+loginName+"' AND password ='"+password+"'";
+	String query = "SELECT loginName, password, RUID, isLocked FROM accounts WHERE loginName ='"+loginName+"' AND password ='"+password+"'";
 	
 	PreparedStatement ps = con.prepareStatement(query);
 	ResultSet result = ps.executeQuery(query);
 	if(result.next()){
+		if(result.getInt("isLocked")==1){
+			out.print("You are locked out.");
+			response.sendRedirect("index.html");
+		}
 		session.setAttribute("ruid", result.getInt("RUID"));
 		con.close();
 		// out.print("Account Name: " + loginName + "<br> Password: " + password);

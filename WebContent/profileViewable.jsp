@@ -106,6 +106,11 @@ try {
 	/* Rating Calculation */
 	double avgR = sumR/numR;
 	double avgP = (avgR/5) * 100;
+	
+	/* Comments */
+	query="SELECT * FROM finalproject.ratings WHERE toRUID=" + thisruid;
+	Statement stmt7 = conn.createStatement();
+	ResultSet com = stmt7.executeQuery(query);
 %>
 	
 <!-- Top Title -->
@@ -169,7 +174,46 @@ try {
 		</div>
 	  </div> 
 	  <div style="clear:both"></div>
+	  
+	  <hr class="w3-opacity">
+	    
+  	  <!-- User Comments -->
+	  <div align=center style="width:100%">
+	    <h4><b>User Comments</b></h4>
+	  	<table style="width:80%" border="1">
+	  		<col width=20%>
+	  		<col width=75% align=center>
+	  		<col width=5%>
+	  		<tr>
+	  			<th><%out.print(searchName);%>'s Role</th>
+	  			<th>Comment</th>
+	  			<th>Rating</th>
+	  		</tr>
+<%
+	while(com.next()) {
+		if(com.getString("role").equals("Driver")) {
+%>
+			<tr>
+				<td>Passenger</td>
+				<td><%out.print(com.getString("thecomment"));%></td>
+				<td><%out.print(com.getInt("rating"));%></td>
+			</tr>
+<%
+		} else {
+%>
+			<tr>
+				<td>Driver</td>
+				<td><%out.print(com.getString("thecomment"));%></td>
+				<td><%out.print(com.getInt("rating"));%></td>
+			</tr>
+<%
+		}
+	}
+%>
+	  	</table>
+	  </div>
   </div>
+
   
   <!-- Vehicle Information -->
   <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="contact">
@@ -253,10 +297,12 @@ try {
   <div class="w3-black w3-center w3-padding-24">Made by Alex Marek, Jacek Zarski & Armin Grossrieder</div>
   <%
 	/* Close stmt and conn */
+	com.close();
 	stmt.close();
  	stmt1.close();
 	stmt3.close();
 	stmt4.close();
+	stmt7.close();
 	conn.close();
   }
 	catch(Exception e)

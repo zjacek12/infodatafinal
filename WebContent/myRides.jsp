@@ -21,7 +21,7 @@ try {
 	int ruid = Integer.parseInt(session.getAttribute("ruid").toString());
 	
 	Statement delstmt = con.createStatement();
-	query = "DELETE FROM finalproject.offeredRides WHERE departureTime <= DATE_ADD(current_timestamp,INTERVAL -4 HOUR)";
+	query = "DELETE FROM finalproject.offeredRides WHERE departureTime <= DATE_ADD(current_timestamp,INTERVAL -4 HOUR) AND recurring=0";
 	delstmt.executeUpdate(query);
 	delstmt.close();
 	
@@ -83,20 +83,26 @@ try {
 			  	<td><b><%out.print(result.getString("toLocation")); %></b></td>
 			  	<td><b><%out.print(result.getString("departureTime").substring(0, 10)); %></b></td>
 			  	<td><b><%out.print(result.getString("departureTime").substring(11)); %></b></td>
+			  	<td><b><%out.print(result.getString("arrivalTime").substring(0, 10)); %></b></td>
+			  	<td><b><%out.print(result.getString("arrivalTime").substring(11)); %></b></td>
 			</tr>
   			<tr bgcolor="#CCCCFF" colspan=2>
   				<td><b>Matching Requests </b></td>
 			  	<td><b>RUID</b></td>
 			  	<td><b>From</b></td>
 			  	<td><b>To</b></td>
-			  	<td><b>On</b></td>
-			  	<td><b>At</b></td>
+			  	<td><b>Depart On</b></td>
+			  	<td><b>Depart At</b></td>
+			  	<td><b>Arrive On</b></td>
+			  	<td><b>Arrive At</b></td>
 			</tr>
 			
 			<%
 			Statement stmt11 = con.createStatement();
-			String nquery = "select * from finalproject.requestedRides "+"where fromLocation='"+result.getString("fromLocation")+"' and toLocation='"+result.getString("toLocation")+"' AND (departureTime>=" + result.getString("departureTime") + " OR earlyDeparture>=" + result.getString("departureTime") + ") AND (earlyDeparture<=" + result.getString("arrivalTime") + " OR departureTime<=" + result.getString("arrivalTime") + ")  " + " AND arrivalTime>=" + result.getString("arrivalTime");
-			// TODO: AND DEPARTURE TIMES MATCH UP ='"+loginName+"'
+			String nquery = "select * from finalproject.requestedRides "+"where fromLocation='"+result.getString("fromLocation")+
+					"' and toLocation='"+result.getString("toLocation")+
+					"' AND arrivalTime>='" + result.getString("departureTime")+"' AND (departureTime<='" + result.getString("arrivalTime")+
+					"' OR earlyDeparture<='"+result.getString("arrivalTime")+"')";
 			ResultSet result11 = stmt11.executeQuery(nquery); 
 			while(result11.next()){
 			%>
@@ -107,8 +113,10 @@ try {
 				<td><% out.print(result11.getInt("RUID"));%></td>
 		  		<td><% out.print(result11.getString("fromLocation"));%></td>
 		  		<td><% out.print(result11.getString("toLocation"));%></td>
-		  		<td><%out.print(result.getString("departureTime").substring(0, 10)); %></td>
-		  		<td><%out.print(result.getString("departureTime").substring(11)); %></td>
+		  		<td><%out.print(result11.getString("departureTime").substring(0, 10)); %></td>
+		  		<td><%out.print(result11.getString("departureTime").substring(11)); %></td>
+		  		<td><%out.print(result11.getString("arrivalTime").substring(0, 10)); %></td>
+		  		<td><%out.print(result11.getString("arrivalTime").substring(11)); %></td>
 			</tr>
 
 			
@@ -117,7 +125,7 @@ try {
 			result11.close();
 			%>
 			<tr>
-				<td>
+				<td colspan=8>
 					<input type="submit" value="Submit Request" class="w3-bar-item w3-button w3-hover-black">
 				</td>
 			</tr>
