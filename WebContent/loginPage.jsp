@@ -23,7 +23,11 @@ try {
 	session.setAttribute("loginName", loginName);
   	String password = request.getParameter("password");
   	session.setAttribute("password", password);
-
+	
+  	if(loginName.equalsIgnoreCase("admin")) {
+		response.sendRedirect("admin.jsp");
+	}
+  	
 	String query = "SELECT loginName, password, RUID FROM accounts WHERE loginName ='"+loginName+"' AND password ='"+password+"'";
 	
 	PreparedStatement ps = con.prepareStatement(query);
@@ -33,17 +37,13 @@ try {
 		con.close();
 		// out.print("Account Name: " + loginName + "<br> Password: " + password);
 		out.print("<br>Logged In!");
+		response.sendRedirect("profilePage.jsp");
 	} else {
 		con.close();
 		out.print("Please go back and create an account!");
 	}
 	
-	if(loginName.equalsIgnoreCase("admin")) {
-		response.sendRedirect("admin.jsp");
-	} else {
-    	/* response.sendRedirect(redirectURL); */
-		response.sendRedirect("profilePage.jsp");
-	}
+	
 	
 } catch (Exception ex) {
 	out.print("something failed failed" + "<br>");

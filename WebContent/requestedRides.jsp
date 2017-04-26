@@ -90,6 +90,7 @@ try {
 	    	<th>Delete</th>
 			<th>Early Departure Time</th>
 			<th>Departure Time</th>
+			<th>Arrival Time</th>
 			<th>From</th>
 			<th>To</th>
 		</tr>
@@ -101,6 +102,7 @@ try {
     		<input id="button" type="submit" value="Delete" ></td>
 			<td><%out.print(rides.getString("earlyDeparture"));%></td>
 			<td><%out.print(rides.getString("departureTime"));%></td>
+			<td><%out.print(rides.getString("arrivalTime"));%></td>
 			<td><%out.print(rides.getString("fromLocation"));%></td>
 			<td><%out.print(rides.getString("toLocation"));%></td>
 		</tr>	
@@ -111,7 +113,7 @@ try {
 		conn.close();
 		%>
 		<tr>
-			<td align=center colspan=5>
+			<td align=center colspan=6>
 				<input type="submit" value="Delete Selected" class="w3-bar-item w3-button w3-hover-black">
 			</td>
 		</tr>
