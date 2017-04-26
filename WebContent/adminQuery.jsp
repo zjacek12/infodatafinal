@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.sql.*,java.text.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
@@ -130,9 +130,11 @@ try {
 </header>
 
 <!-- Logout -->
-<div style="float:right; margin-right:50px">
+<div style="float:right;margin-right:50px">
   <p> </p>
-  <a href="index.html" onClick="alert('You have successfuly logged out.')">Logout</a>
+  <form action="logout.jsp" method="post">
+    <input type="submit" value="Logout" />
+  </form>
 </div>
 
 <!-- !PAGE CONTENT! -->

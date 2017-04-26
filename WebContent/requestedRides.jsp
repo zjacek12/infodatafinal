@@ -29,7 +29,7 @@ try {
 	/* Queries and variables */
 	String query;
 	
-	query = "DELETE FROM finalproject.requestedRides WHERE departureTime <= NOW() AND recurring<1";
+	query = "DELETE FROM finalproject.requestedRides WHERE departureTime <= DATE_ADD(current_timestamp,INTERVAL -4 HOUR) AND recurring < 1";
 	delstmt.executeUpdate(query);
 	delstmt.close();
 	
@@ -49,7 +49,9 @@ try {
 <!-- Logout -->
 <div style="float:right;margin-right:50px">
   <p> </p>
-  <a href="index.html" onClick="alert('You have successfuly logged out.')">Logout</a>
+  <form action="logout.jsp" method="post">
+    <input type="submit" value="Logout" />
+  </form>
 </div>
 
 <!-- !PAGE CONTENT! -->

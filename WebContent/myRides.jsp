@@ -21,7 +21,7 @@ try {
 	int ruid = Integer.parseInt(session.getAttribute("ruid").toString());
 	
 	Statement delstmt = con.createStatement();
-	query = "DELETE FROM finalproject.offeredRides WHERE departureTime <= NOW()";
+	query = "DELETE FROM finalproject.offeredRides WHERE departureTime <= DATE_ADD(current_timestamp,INTERVAL -4 HOUR)";
 	delstmt.executeUpdate(query);
 	delstmt.close();
 	
@@ -38,7 +38,9 @@ try {
 <!-- Logout -->
 <div style="float:right;margin-right:50px">
   <p> </p>
-  <a href="index.html" onClick="alert('You have successfuly logged out.')">Logout</a>
+  <form action="logout.jsp" method="post">
+    <input type="submit" value="Logout" />
+  </form>
 </div>
 
 <!-- !PAGE CONTENT! -->
@@ -75,7 +77,7 @@ try {
 	<form action="selectRequests.jsp" method="post">
 		<table style="width:100%" class="w3-table-all">
 			<tr>
-				<td><b>Ride: </b><input type="hidden" name="offerID" value="<%= result.getInt("offerID") %>"/></td>
+				<td><b>Ride: </b><input type="hidden" name="offerID" value="<%= result.getInt("offerID") %>" /></td>
 			  	<td><b><%out.print(ruid); %></b></td>
 			  	<td><b><%out.print(result.getString("fromLocation")); %></b></td>
 			  	<td><b><%out.print(result.getString("toLocation")); %></b></td>
@@ -100,8 +102,10 @@ try {
 			while(result11.next()){
 			%>
 			<tr>
-				<td><input type="checkbox" name="selected" value="<%= result11.getInt("requestID") %>"></td>
-				<td><% out.print(result11.getInt("RUID"));%><input type="hidden" name="selectedRUID" value="<%= result.getInt("RUID") %>"/></td>
+				<td>
+					<input type="checkbox" name="selected" value="<%= result11.getInt("requestID") %>">
+				</td>
+				<td><% out.print(result11.getInt("RUID"));%></td>
 		  		<td><% out.print(result11.getString("fromLocation"));%></td>
 		  		<td><% out.print(result11.getString("toLocation"));%></td>
 		  		<td><%out.print(result.getString("departureTime").substring(0, 10)); %></td>
@@ -109,7 +113,10 @@ try {
 			</tr>
 
 			
-			<% } %>
+			<% } 
+			stmt11.close();
+			result11.close();
+			%>
 			<tr>
 				<td>
 					<input type="submit" value="Submit Request" class="w3-bar-item w3-button w3-hover-black">
@@ -117,7 +124,9 @@ try {
 			</tr>
 		</table>
 	</form>
-  <%}%>
+  <%}
+  result.close();
+  %>
   		
 		
 		<!-- </form> -->

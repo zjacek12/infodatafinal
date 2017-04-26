@@ -9,7 +9,6 @@
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
 <%
 try {
-
 	
 	
 	String url = "jdbc:mysql://infodataprojectdb.cp0hpiqr4mmx.us-east-2.rds.amazonaws.com:3306/finalproject";
@@ -30,10 +29,20 @@ try {
   	String email = request.getParameter("email");
 	String phoneNumber = request.getParameter("phoneNumber");
 	String address = request.getParameter("address");
+	String forwarding = request.getParameter("forwarding");
 	
 	StringBuilder sb = new StringBuilder();
 	
 	sb.append("UPDATE finalproject.accounts SET ");
+	
+	if(forwarding==null) {
+		update=true;
+		sb.append("emailForward=0");
+	} else {
+		update=true;
+		sb.append("emailForward=1");
+		
+	}
 	
 	if(!loginName.equals("")){
 		update = true;

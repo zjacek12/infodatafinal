@@ -47,7 +47,7 @@ try {
 	ResultSet vi = stmt.executeQuery(query);
 	
 	/* Leader Board */
-	query="SELECT * FROM finalproject.accounts ORDER BY rankScore";
+	query="SELECT * FROM finalproject.accounts ORDER BY rankScore DESC";
 	Statement stmt1=conn.createStatement();
 	ResultSet lb = stmt1.executeQuery(query);
 	
@@ -68,34 +68,38 @@ try {
 	query="SELECT SUM(rating) as sum FROM finalproject.ratings WHERE toRUID=" + thisruid;
 	Statement stmt5=conn.createStatement();
 	ResultSet pr = stmt5.executeQuery(query);
-	double sumR = 0;
-	if(pr.next()){
-		sumR = pr.getDouble("sum");
-	}
+	pr.next();
+	double sumR = pr.getDouble("sum");
 	pr.close();
 	
 	query="SELECT COUNT(*) as cnt FROM finalproject.ratings WHERE toRUID=" + thisruid;
 	pr = stmt5.executeQuery(query);
-	double numR = 0;
-	if(pr.next()) {
-		numR = pr.getInt("cnt");
-	}
+	pr.next();
+	double numR = pr.getInt("cnt");
 	pr.close();
 	
-	query="SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role='Driver' AND RUID=" + thisruid;
+	query="SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role='Driver' AND RUID=" + thisruid + " AND departureTime > DATE_ADD(DATE_ADD(current_timestamp,INTERVAL -1 MONTH), INTERVAL -4 HOUR)";
 	pr = stmt5.executeQuery(query);
-	int numGiven = 0;
-	if(pr.next()) {
-		numGiven = pr.getInt("cnt");
-	}
+	pr.next(); 
+	int numGivenMonth = pr.getInt("cnt");
 	pr.close();
 	
-	query="SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role='Driver' AND RUID=" + thisruid;
+	query="SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role='Driver' AND RUID=" + thisruid + " AND departureTime> DATE_ADD(DATE_ADD(current_timestamp,INTERVAL -3 MONTH), INTERVAL -4 HOUR)";
 	pr = stmt5.executeQuery(query);
-	int numTaken = 0;
-	if(pr.next()){
-		numTaken = pr.getInt("cnt");
-	}
+	pr.next(); 
+	int numGivenSemester = pr.getInt("cnt");
+	pr.close();
+	
+	query="SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role='Passenger' AND RUID=" + thisruid + " AND departureTime> DATE_ADD(DATE_ADD(current_timestamp,INTERVAL -1 MONTH), INTERVAL -4 HOUR)";
+	pr = stmt5.executeQuery(query);
+	pr.next();
+	int numTakenMonth = pr.getInt("cnt");
+	pr.close();
+	
+	query="SELECT COUNT(*) as cnt FROM finalproject.rideLog WHERE role='Passenger' AND RUID=" + thisruid + " AND departureTime> DATE_ADD(DATE_ADD(current_timestamp,INTERVAL -3 MONTH), INTERVAL -4 HOUR)";
+	pr = stmt5.executeQuery(query);
+	pr.next();
+	int numTakenSemester = pr.getInt("cnt");
 	pr.close();
 	stmt5.close();
 	
@@ -112,7 +116,9 @@ try {
 <!-- Logout -->
 <div style="float:right;margin-right:50px">
   <p> </p>
-  <a href="index.html" onClick="alert('You have successfuly logged out.')">Logout</a>
+  <form action="logout.jsp" method="post">
+    <input type="submit" value="Logout" />
+  </form>
 </div>
 
 <!-- !PAGE CONTENT! -->
@@ -134,21 +140,34 @@ try {
   <!-- About Section -->
   <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="about">
 	  
-	  <!-- User Rating --> <!-- *ADD COMMENTS VIEWABLE?* -->
+ <!-- User Rating --> <!-- *ADD COMMENTS VIEWABLE?* -->
       <h4 class="w3-padding-16">User Rating</h4>
       <div class="w3-white">
         <div class="w3-container w3-padding-small w3-center w3-green" style="width:${avgP}%>"><%out.print(avgP);%>%</div>
       </div>
+	 
 	  <div style="width:100%">
-	    <div style="width:20%; float:left">
-		  <h4>Rides Given</h4>
-		  <p><%out.print(numGiven);%></p>
+	    <div class="w3-half">
+		  <h4>Rides Given This Month</h4>
+		  <p><%out.print(numGivenMonth);%></p>
 		</div>
-		<div style="width:80%; float:right">
-		  <h4>Rides Received</h4>
-		  <p><%out.print(numTaken);%></p>
+		<div class="w3-half">
+		  <h4>Rides Taken This Month</h4>
+		  <p><%out.print(numTakenMonth);%></p>
 		</div>
 	  </div>
+	  <div style="clear:both"></div>
+	  
+	  <div style="width:100%">
+	    <div class="w3-half">
+		  <h4>Rides Given This Semester</h4>
+		  <p><%out.print(numGivenSemester);%></p>
+		</div>
+		<div class="w3-half">
+		  <h4>Rides Taken This Semester</h4>
+		  <p><%out.print(numTakenSemester);%></p>
+		</div>
+	  </div> 
 	  <div style="clear:both"></div>
   </div>
   

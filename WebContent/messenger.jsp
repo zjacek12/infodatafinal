@@ -44,9 +44,11 @@ try {
 </header>
 
 <!-- Logout -->
-<div style="float:right; margin-right:50px">
+<div style="float:right;margin-right:50px">
   <p> </p>
-  <a href="index.html" onClick="alert('You have successfuly logged out.')">Logout</a>
+  <form action="logout.jsp" method="post">
+    <input type="submit" value="Logout" />
+  </form>
 </div>
 
 <!-- !PAGE CONTENT! -->
@@ -106,10 +108,21 @@ try {
 			if(msg.getInt("fromRuid") == myruid) { // Sent from you
 %>
 			<tr>
-				<td height=50><form action="deleteMessage.jsp" method="post"><input type="submit" value="Delete" class="w3-button w3-black">
-				<input type="hidden" name="to" value="<%out.print(otherRUID);%>"><input type="hidden" name="fro" value="<%out.print(myruid);%>"><input type="hidden" name="date" value="<%out.print(msg.getString("time"));%>"><input type="hidden" name="context" value="<%out.print(msg.getString("message"));%>"></form></td>
-				<td align="left"><%out.print(msg.getString("message"));%></td>
-				<td><%out.print(msg.getString("time"));%></td>
+				<td height=50>
+					  <form action="deleteMessage.jsp" method="post">
+					<input type="submit" value="Delete" class="w3-button w3-black">
+					<input type="hidden" name="to" value="<%= otherRUID %>">
+					<input type="hidden" name="fro" value="<%= myruid %>">
+					<input type="hidden" name="date" value="<%= msg.getString("time")%>">
+					<input type="hidden" name="context" value="<%= msg.getString("message")%>">
+					  </form>
+				</td>
+				<td align="left">
+					<%out.print(msg.getString("message"));%>
+				</td>
+				<td>
+				<%out.print(msg.getString("time"));%>
+				</td>
 			</tr>
 <%
 			} else { // Received
@@ -124,6 +137,7 @@ try {
 		}
 %>
 	    </table>
+	  
 <% 
 	}
 	rmf.close();

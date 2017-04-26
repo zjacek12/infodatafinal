@@ -26,6 +26,7 @@ try {
   	String toLocation = request.getParameter("toLocation");
   	String plate = request.getParameter("car");
   	int amtPPL = Integer.parseInt(request.getParameter("amtPPL"));
+  	amtPPL++;
   	//get the parameter convert it to a data type Date.
 
   	 //Display the date
@@ -58,7 +59,7 @@ try {
 				"'"+toLocation+"', "+
 				"'"+departureTime+"', "+
 				"'"+arrivalTime+"', "+
-				"'"+amtPPL+"', "+
+				"'"+(amtPPL)+"', "+
 				"'"+parkinglot+"', "+
 				"'"+plate+"')";
 		PreparedStatement ps = con.prepareStatement(insert);

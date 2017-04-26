@@ -5,8 +5,6 @@
 
 <!-- Jacek Zarski, Alex Marek, Armin Grossrieder -->
 <!DOCTYPE html>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,7 +17,9 @@
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 <div style="float:right;margin-right:50px">
   <p> </p>
-  <a href="index.html" onClick="alert('You have successfuly logged out.')">Logout</a>
+  <form action="logout.jsp" method="post">
+    <input type="submit" value="Logout" />
+  </form>
 </div>
 <header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
   <div class="w3-left w3-padding">Request a ride!</div>

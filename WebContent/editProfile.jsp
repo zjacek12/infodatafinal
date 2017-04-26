@@ -47,8 +47,9 @@ try {
 <!-- Logout -->
 <div style="float:right;margin-right:50px">
   <p> </p>
-  <a href="index.html" onClick="alert('You have successfuly logged out.')">Logout</a>
-</div>
+  <form action="logout.jsp" method="post">
+    <input type="submit" value="Logout" />
+  </form></div>
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:50px;margin-right:50px">
@@ -63,7 +64,7 @@ try {
       <a href="profilePage.jsp" class="w3-bar-item w3-hover-black w3-button">Profile</a>
       <a href="offeredRides.jsp" class="w3-bar-item w3-button w3-hover-black">Offered Rides</a>
       <a href="requestedRides.jsp" class="w3-bar-item w3-button w3-hover-black">Requested Rides</a>
-      <a href="messages.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
+      <a href="messenger.jsp" class="w3-bar-item w3-button w3-hover-black">Messaging</a>
       <a href="editProfile.jsp" class="w3-bar-item w3-button w3-black">Edit Profile</a>
       <div class="w3-right"  style="width:30%"><form action="profileViewable.jsp" method="get">
       <input type="search" name="searchName" class="w3-input" value="" placeholder="Search by: User Name" 
@@ -139,6 +140,13 @@ try {
 								<br>
 								<input type="text" name="address" value="" size=25  maxlength=125>
 							<br></td>
+						</tr>
+						<tr>
+							<td align=center colspan=2>
+								<b>Email Forwarding?</b>
+								<br>
+								<input type="checkbox" name="forwarding" value="">
+							</td>
 						</tr>
 						<tr >
 							<td  align=center colspan=2>

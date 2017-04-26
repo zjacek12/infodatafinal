@@ -32,10 +32,22 @@ try {
 		out.println("Received userName: " + result.getString("loginName"));
 	
 	} else {
-		query = "INSERT INTO finalproject.messages (fromRUID, toRUID, message, time) VALUES (" + myruid + "," + result.getInt("ruid") + ",\"" + message + "\", CURRENT_TIMESTAMP)";
+		query = "INSERT INTO finalproject.messages (fromRUID, toRUID, message, time) VALUES (" + myruid + "," + result.getInt("ruid") + ",\"" + message + "\", DATE_ADD(CURRENT_TIMESTAMP, INTERVAL -4 HOUR))";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.executeUpdate();
 		
+		query = "SELECT emailForward, email FROM finalproject.accounts WHERE RUID=" + result.getInt("ruid");
+		
+		result = stmt.executeQuery(query);
+		result.next();
+		
+		if(result.getInt("emailForward")==1) {
+			query = "INSERT INTO finalproject.SENT_EMAIL (fromRUID, toEmail, content, datetime) VALUES (" + myruid + ", '" + result.getString("email") + "', '" + message + "', DATE_ADD(CURRENT_TIMESTAMP, INTERVAL -4 HOUR))";
+			ps = conn.prepareStatement(query);
+			ps.executeUpdate();
+		}
+				
+		stmt.close();
 		result.close();
 		ps.close();
 		conn.close();
@@ -44,6 +56,7 @@ try {
 	}
 	
 	result.close();
+	stmt.close();
 	conn.close();
 	
 } catch (Exception ex) {

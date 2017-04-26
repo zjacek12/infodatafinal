@@ -25,9 +25,11 @@
 </header>
 
 <!-- Logout -->
-<div style="float:right; margin-right:50px">
+<div style="float:right;margin-right:50px">
   <p> </p>
-  <a href="index.html" onClick="alert('You have successfuly logged out.')">Logout</a>
+  <form action="logout.jsp" method="post">
+    <input type="submit" value="Logout" />
+  </form>
 </div>
 
 <!-- !PAGE CONTENT! -->
