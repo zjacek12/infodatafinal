@@ -36,6 +36,13 @@ try {
 	query="SELECT role FROM finalproject.rideLog WHERE rideID=" + rideId + " AND RUID=" + myruid;
 	ResultSet rl = stmt.executeQuery(query);
 	rl.next();
+	
+	if(rl.getString("role").equals("Driver")) {
+		String query2 = "DELETE FROM finalproject.offeredRides WHERE offerID="+rideId;
+		PreparedStatement ps2 = conn.prepareStatement(query2);
+		ps2.executeUpdate();
+		ps2.close();
+	}
 %>
 	
 <!-- Top Title -->
@@ -89,7 +96,7 @@ try {
     
 <%
 		while(nme.next()) {
-			String message = "'Your driver has concluded the ride! Please rate him! <form action=\"rating.jsp\" method=\"post\"><input type=\"hidden\" name=\"rideId\" value=\""+rideId+"\"/><input type=\"submit\" class=\"w3-button w3-white w3-hover-black\" value=\"Rate Driver\"/></form>'";
+			String message = "'Your driver has concluded the ride! Please rate him once the ride finishes! <form action=\"rating.jsp\" method=\"post\"><input type=\"hidden\" name=\"rideId\" value=\""+rideId+"\"/><input type=\"submit\" class=\"w3-button w3-white w3-hover-black\" value=\"Rate Driver\"/></form>'";
 			String query1 = "INSERT INTO finalproject.messages (fromRUID, toRUID, message, time) VALUES (1111, "+nme.getInt("RUID")+", "+message+", DATE_ADD(current_timestamp,INTERVAL -4 HOUR))";
 			PreparedStatement ps = conn.prepareStatement(query1);
 			ps.executeUpdate();
@@ -99,7 +106,7 @@ try {
       <h4 class="w3-center"><b><%out.print(nme.getString("a.loginName"));%></b></h4>
       <p class="w3-center"><%out.print(nme.getString("a.firstName") + " " + nme.getString("a.lastName"));%></p>
       <form action="createRating.jsp" method="post">
-      <div class="w3-section">
+      <div class="w3-section w3-center">
         <label>Rating (1-5)</label>
         <p>
         	<select name="score">
@@ -110,7 +117,7 @@ try {
 			<option value="5"> (5/5) </option>
 			</select>
 		</p>
-		<p><input type="text" name="cmnt" value="" placeholder="Anything you'd like to mention about this driver?"></p>
+		<p><input class="w3-input w3-border w3-margin-bottom" type="text" name="cmnt" value="" placeholder="Anything you'd like to mention about this driver?"></p>
 		<input type="hidden" name="toRUID" value="<%out.print(nme.getInt("a.RUID"));%>">
 		<input type="hidden" name="role" value="Driver">
 		<input type="submit" value="Submit Rating">
@@ -140,7 +147,7 @@ try {
       <h4 class="w3-center"><b><%out.print(nme.getString("loginName"));%></b></h4>
       <p class="w3-center"><%out.print(nme.getString("firstName") + " " + nme.getString("lastName"));%></p>
       <form action="createRating.jsp" method="post">
-      <div class="w3-section">
+      <div class="w3-section w3-center">
         <label>Rating (1-5)</label>
         <p>
         	<select name="score">
@@ -151,9 +158,10 @@ try {
 			<option value="5"> (5/5) </option>
 			</select>
 		</p>
-		<p><input type="text" name="cmnt" value="" placeholder="Anything you'd like to mention about this driver?"></p>
+		<p><input class="w3-input w3-border w3-margin-bottom" type="text" name="cmnt" value="" placeholder="Anything you'd like to mention about this driver?"></p>
 		<input type="hidden" name="toRUID" value="<%out.print(rateed);%>">
 		<input type="hidden" name="role" value="Passenger">
+		<input type="submit" value="Submit Rating">
       </div>
       </form>
     </div>

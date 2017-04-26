@@ -59,7 +59,7 @@ try {
 				"'"+toLocation+"', "+
 				"'"+departureTime+"', "+
 				"'"+arrivalTime+"', "+
-				"'"+(amtPPL)+"', "+
+				"'"+amtPPL+"', "+
 				"'"+parkinglot+"', "+
 				"'"+plate+"')";
 		PreparedStatement ps = con.prepareStatement(insert);

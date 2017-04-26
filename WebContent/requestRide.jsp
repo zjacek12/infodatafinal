@@ -84,7 +84,7 @@ try {
 				</tr>
 				<tr bgcolor="#c8d8f8">
 					<td valign=top>
-						<b>Driver Rating: <%out.print(result.getDouble("driverRating")); %></b>
+						<b>Driver Rating: <%out.print(result.getDouble("userRating")); %></b>
 						<br>
 						<b>Number of rides offered: <%out.print(result.getInt("numRides"));%></b>
 					</td>

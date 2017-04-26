@@ -13,6 +13,8 @@ try {
 
 	int ruid = Integer.parseInt(session.getAttribute("ruid").toString());
 	
+	String loginName = session.getAttribute("loginName").toString();
+	
 	int offerID = Integer.parseInt(request.getParameter("offerID"));
 	int requestID = Integer.parseInt(request.getParameter("requestID"));
 	
@@ -25,7 +27,7 @@ try {
 	int cnt = check.getInt("cnt");
 	check.close();
 	if(cnt < 1){
-		out.print("That ride is full now... Sorry!");
+		out.print("That ride is full or it has been closed... Sorry!");
 		stmt.close();
 	} else {
 		stmt.close();
@@ -88,7 +90,13 @@ try {
 		ps.executeUpdate();
 		ps.close();
 		
-		String message = "'Your ride leaves at "+rideInfo.getString("departureTime")+" from "+rideInfo.getString("fromLocation")+" "+rideInfo.getString("parkinglot")+"'";
+		String message = "'"+loginName+" has joined your ride! Your ride leaves at "+rideInfo.getString("departureTime")+" from "+rideInfo.getString("fromLocation")+" "+rideInfo.getString("parkinglot")+"'";
+		query = "INSERT INTO finalproject.messages(fromRUID, toRUID, message, time) VALUES (1111, "+rideInfo.getInt("RUID")+", "+message+", DATE_ADD(current_timestamp,INTERVAL -4 HOUR))";
+		PreparedStatement ps4 = con.prepareStatement(query);
+		ps4.executeUpdate();
+		ps4.close();
+		
+		message = "'Your ride leaves at "+rideInfo.getString("departureTime")+" from "+rideInfo.getString("fromLocation")+" "+rideInfo.getString("parkinglot")+"'";
 		query = "INSERT INTO finalproject.messages(fromRUID, toRUID, message, time) VALUES (1111, "+ruid+", "+message+", DATE_ADD(current_timestamp,INTERVAL -4 HOUR))";
 		PreparedStatement ps3 = con.prepareStatement(query);
 		ps3.executeUpdate();

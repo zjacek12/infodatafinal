@@ -95,8 +95,7 @@ try {
 			
 			<%
 			Statement stmt11 = con.createStatement();
-			String nquery = "select * from finalproject.requestedRides "+
-					"where fromLocation='"+result.getString("fromLocation")+"' and toLocation='"+result.getString("toLocation")+"'";
+			String nquery = "select * from finalproject.requestedRides "+"where fromLocation='"+result.getString("fromLocation")+"' and toLocation='"+result.getString("toLocation")+"' AND (departureTime>=" + result.getString("departureTime") + " OR earlyDeparture>=" + result.getString("departureTime") + ") AND (earlyDeparture<=" + result.getString("arrivalTime") + " OR departureTime<=" + result.getString("arrivalTime") + ")  " + " AND arrivalTime>=" + result.getString("arrivalTime");
 			// TODO: AND DEPARTURE TIMES MATCH UP ='"+loginName+"'
 			ResultSet result11 = stmt11.executeQuery(nquery); 
 			while(result11.next()){

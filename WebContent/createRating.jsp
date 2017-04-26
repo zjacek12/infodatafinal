@@ -20,8 +20,22 @@ try {
 	String toid = request.getParameter("toRUID");
 	String role = request.getParameter("role");
 	
-	String query="INSERT INTO finalproject.ratings (fromRUID, toRUID, role, rating, thecomment) VALUES (" + ruid + ", " + toid + ", \"" + role + "\", " + score + ", \"" + cmnt + "\")";
-
+	String query;
+	
+	query="SELECT * FROM finalproject.ratings WHERE fromRUID=" + ruid + " AND toRUID=" + toid + " AND role='" + role + "'";
+	ResultSet rewrite = stmt.executeQuery(query);
+	
+	// Comment already exists, do rewrite
+	if(rewrite.next()) {
+		rewrite.close();
+		query="UPDATE finalproject.ratings SET rating=" + score + ", thecomment='" + cmnt + "' WHERE fromRUID=" + ruid + " AND toRUID=" + toid + " AND role='" +  role + "'";
+	
+	// First time commenting
+	} else {
+		rewrite.close();
+		query="INSERT INTO finalproject.ratings (fromRUID, toRUID, role, rating, thecomment) VALUES (" + ruid + ", " + toid + ", \"" + role + "\", " + score + ", \"" + cmnt + "\")";
+	}
+		
 	stmt.executeUpdate(query);
 	
 	stmt.close();
@@ -35,6 +49,7 @@ try {
 	out.print("maybe something went wrong"); */
 	out.print("<br>" +"this may be why : " +ex.getMessage());
 	ex.printStackTrace();
+	//request.sendRedirect("profilePage.jsp");
 }
 %>
 
