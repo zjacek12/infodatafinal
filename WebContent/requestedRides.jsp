@@ -29,7 +29,37 @@ try {
 	/* Queries and variables */
 	String query;
 	
-	query = "DELETE FROM finalproject.requestedRides WHERE departureTime <= DATE_ADD(current_timestamp,INTERVAL -4 HOUR) AND recurring < 1";
+	query = "SELECT * FROM finalproject.requestedRides WHERE departureTime <= DATE_ADD(current_timestamp,INTERVAL -4 HOUR) AND recurring = 1";
+	PreparedStatement ps5 = conn.prepareStatement(query);
+	ResultSet result5 = ps5.executeQuery(query);
+	while(result5.next()){
+		query = "INSERT INTO finalproject.requestedRides " +
+				"(RUID, "+
+				"fromLocation, "+
+				"toLocation, "+
+				"departureTime, "+
+				"arrivalTime, "+
+				"recurring, "+
+				"earlyDeparture, "+
+				"parkinglot)"+
+				
+				"VALUES"+
+				"("+result5.getInt("RUID")+", "+
+				"'"+result5.getString("fromLocation")+"', "+
+				"'"+result5.getString("toLocation")+"', "+
+				"DATE_ADD('"+result5.getString("departureTime")+"' ,INTERVAL 7 DAY), "+
+				"DATE_ADD('"+result5.getString("arrivalTime")+"' ,INTERVAL 7 DAY), "+
+				"1, "+
+				"DATE_ADD('"+result5.getString("earlyDeparture")+"' ,INTERVAL 7 DAY), "+
+				"'"+result5.getString("parkinglot")+"')";
+		PreparedStatement ps8 = conn.prepareStatement(query);
+		ps8.executeUpdate();
+		ps8.close();
+	}
+	result5.close();
+	ps5.close();
+	
+	query = "DELETE FROM finalproject.requestedRides WHERE departureTime <= DATE_ADD(current_timestamp,INTERVAL -4 HOUR)";
 	delstmt.executeUpdate(query);
 	delstmt.close();
 	

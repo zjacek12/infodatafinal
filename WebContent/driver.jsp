@@ -130,11 +130,11 @@ try {
 				<tr bgcolor="#c8d8f8">
 					<td>
 						<label for="yesrecurring">Every Week</label>
-						<input type="radio" name="recurring" id="yesrecurring" value="true">
+						<input type="radio" name="recurring" id="yesrecurring" value="1">
 					</td>
 					<td>
 						<label for="norecurring">Only Once</label>
-						<input type="radio" name="recurring" id="norecurring" value="false" checked="checked">
+						<input type="radio" name="recurring" id="norecurring" value="0" checked="checked">
 					</td>
 				</tr>
 				<tr bgcolor="#c8d8f8">

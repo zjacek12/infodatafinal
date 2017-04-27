@@ -58,11 +58,12 @@ try {
 		
 		ps.close();
 		stmt.close();
-		stmt1.close();
-		nresult1.close();
+		
+		
 		nresult.close();
 	}
-	
+	nresult1.close();
+	stmt1.close();
 	conn.close();
 	
 	response.sendRedirect("messenger.jsp");

@@ -20,8 +20,40 @@ try {
 	Connection con = DriverManager.getConnection(url, "alexarminjacek", "alexarminjacek");
 	int ruid = Integer.parseInt(session.getAttribute("ruid").toString());
 	
+	query = "SELECT * FROM finalproject.offeredRides WHERE departureTime <= DATE_ADD(current_timestamp,INTERVAL -4 HOUR) AND recurring = 1";
+	PreparedStatement ps5 = con.prepareStatement(query);
+	ResultSet result5 = ps5.executeQuery(query);
+	while(result5.next()){
+		query = "INSERT INTO offeredRides" +
+				"(RUID, "+
+				"fromLocation, "+
+				"toLocation, "+
+				"departureTime, "+
+				"arrivalTime, "+
+				"numSeats, "+
+				"parkinglot, "+
+				"recurring, "+
+				"plate) "+
+					
+				"VALUES"+
+				"("+result5.getInt("RUID")+", "+
+				"'"+result5.getString("fromLocation")+"', "+
+				"'"+result5.getString("toLocation")+"', "+
+				"DATE_ADD('"+result5.getString("departureTime")+"' ,INTERVAL +7 DAY), "+
+				"DATE_ADD('"+result5.getString("arrivalTime")+"' ,INTERVAL +7 DAY), "+
+				""+result5.getInt("numSeats")+", "+
+				"'"+result5.getString("parkinglot")+"', "+
+				"1, "+
+				"'"+result5.getString("plate")+"')";
+		
+		PreparedStatement ps6 = con.prepareStatement(query);
+		ps6.executeUpdate();
+		ps6.close();
+	}
+	result5.close();
+	ps5.close();
 	Statement delstmt = con.createStatement();
-	query = "DELETE FROM finalproject.offeredRides WHERE departureTime <= DATE_ADD(current_timestamp,INTERVAL -4 HOUR) AND recurring=0";
+	query = "DELETE FROM finalproject.offeredRides WHERE departureTime <= DATE_ADD(current_timestamp,INTERVAL -4 HOUR)";
 	delstmt.executeUpdate(query);
 	delstmt.close();
 	

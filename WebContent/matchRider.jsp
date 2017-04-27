@@ -41,7 +41,33 @@ try {
 		ResultSet rideInfo = stmt1.executeQuery(query);
 		rideInfo.next();
 		if(check2.getInt("cnt") < 1){
-			
+			if(rideInfo.getInt("recurring") == 1){
+				insert = "INSERT INTO offeredRides" +
+						"(RUID, "+
+						"fromLocation, "+
+						"toLocation, "+
+						"departureTime, "+
+						"arrivalTime, "+
+						"numSeats, "+
+						"parkinglot, "+
+						"recurring, "+
+						"plate) "+
+							
+						"VALUES"+
+						"("+rideInfo.getInt("RUID")+", "+
+						"'"+rideInfo.getString("fromLocation")+"', "+
+						"'"+rideInfo.getString("toLocation")+"', "+
+						"DATE_ADD('"+rideInfo.getString("departureTime")+"' ,INTERVAL +7 DAY), "+
+						"DATE_ADD('"+rideInfo.getString("arrivalTime")+"' ,INTERVAL +7 DAY), "+
+						""+rideInfo.getInt("numSeats")+", "+
+						"'"+rideInfo.getString("parkinglot")+"', "+
+						"1, "+
+						"'"+rideInfo.getString("plate")+"')";
+				
+				PreparedStatement ps6 = con.prepareStatement(insert);
+				ps6.executeUpdate();
+				ps6.close();
+			}
 			insert = "INSERT INTO finalproject.rideLog " +
 					"(RUID, "+
 					"rideID, "+
@@ -65,6 +91,7 @@ try {
 			PreparedStatement ps1 = con.prepareStatement(insert);
 			ps1.executeUpdate();
 			ps1.close();
+			
 		}
 		
 		stmt2.close();
@@ -108,7 +135,37 @@ try {
 		stmt1.close();
 		rideInfo.close();
 		
-		query = "DELETE FROM finalproject.requestedRides WHERE requestID="+requestID+" AND recurring=0";
+		query = "SELECT * FROM finalproject.requestedRides WHERE requestID="+requestID+" AND recurring = 1";
+		PreparedStatement ps7 = con.prepareStatement(query);
+		ResultSet result7 = ps7.executeQuery(query);
+		if(result7.next()){
+			insert = "INSERT INTO finalproject.requestedRides " +
+					"(RUID, "+
+					"fromLocation, "+
+					"toLocation, "+
+					"departureTime, "+
+					"arrivalTime, "+
+					"recurring, "+
+					"earlyDeparture, "+
+					"parkinglot)"+
+					
+					"VALUES"+
+					"("+result7.getInt("RUID")+", "+
+					"'"+result7.getString("fromLocation")+"', "+
+					"'"+result7.getString("toLocation")+"', "+
+					"DATE_ADD('"+result7.getString("departureTime")+"' ,INTERVAL 7 DAY), "+
+					"DATE_ADD('"+result7.getString("arrivalTime")+"' ,INTERVAL 7 DAY), "+
+					"1, "+
+					"DATE_ADD('"+result7.getString("earlyDeparture")+"' ,INTERVAL 7 DAY), "+
+					"'"+result7.getString("parkinglot")+"')";
+			PreparedStatement ps8 = con.prepareStatement(insert);
+			ps8.executeUpdate();
+			ps8.close();
+		}
+		result7.close();
+		ps7.close();
+		
+		query = "DELETE FROM finalproject.requestedRides WHERE requestID="+requestID;
 		PreparedStatement ps5 = con.prepareStatement(query);
 		ps5.executeUpdate();
 		ps5.close();
