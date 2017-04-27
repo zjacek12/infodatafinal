@@ -21,12 +21,13 @@ try {
 	String phone = request.getParameter("phone");
 	String email = request.getParameter("email");
 	String address = request.getParameter("address");
+	String username = request.getParameter("username");
 	
-	if(firstName.equals("") || lastName.equals("") || password.equals("") || phone.equals("") || email.equals("") || address.equals("")) {
+	if(firstName.equals("") || lastName.equals("") || password.equals("") || phone.equals("") || email.equals("") || address.equals("") || username.equals("")) {
 		out.println("Missing parameters! Fill all fields to create a System Support Account.");
 	
 	} else {
-		String query = "INSERT INTO finalproject.staffAccounts (password, firstName, lastName, phone, email, address) VALUES (\"" + password + "\",\"" + firstName + "\",\"" + lastName + "\",\"" + phone + "\",\"" + email + "\",\"" + address + "\")";
+		String query = "INSERT INTO finalproject.staffAccounts (username, password, firstName, lastName, phone, email, address) VALUES ('" + username + "', '" + password + "', '" + firstName + "', '" + lastName + "', '" + phone + "', '" + email + "', '" + address + "')";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.executeUpdate();
 	

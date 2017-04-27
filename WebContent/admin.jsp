@@ -113,6 +113,8 @@
     </div>
     <form action="createSysSupport.jsp" method="post">
     <div class="w3-panel">
+      <label>UserName</label>
+      <input class="w3-input w3-border w3-margin-bottom" type="text" name="username">
       <label>First Name</label>
       <input class="w3-input w3-border w3-margin-bottom" type="text" name="firstName">
       <label>Last Name</label>
